@@ -51,7 +51,7 @@ A separate lead-generation pipeline scrapes public property portals for luxury l
 ## Key Engineering Decisions
 
 ### Hybrid search over pure vector search
-Pure semantic search missed exact-match queries — SKU codes like `MOK-001` and material names embed poorly. The retriever runs a keyword pass over structured product fields (id, name, category, wood, finish options) *and* a semantic pass over ChromaDB, with keyword hits taking priority. This fix alone pushed the eval score past the 80% CI gate (currently 94.2%, 10/10).
+Pure semantic search missed exact-match queries — SKU codes like `MOK-001` and material names embed poorly. The retriever runs a keyword pass over structured product fields (id, name, category, wood, finish options) *and* a semantic pass over ChromaDB, with keyword hits taking priority. This fix alone pushed retrieval past the 80% CI gate (10/10 gold questions at build time, June 2026; token cost per message fell 38%, 1,118 → 695).
 
 ### Semantic cache before every LLM call
 Customers ask the same questions in slightly different words. Incoming queries are embedded and compared against cached Q&A pairs; at ≥95% similarity the cached answer is returned with zero LLM cost. The cache has a 7-day TTL and LRU eviction (500 entries) so stale prices age out.
