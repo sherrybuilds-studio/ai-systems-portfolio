@@ -2,7 +2,7 @@
 
 **An end-to-end, compliance-first sales pipeline for a done-for-you website service.**
 
-Sales OS discovers local businesses via the Google Places API, scores their existing websites with Playwright on a mobile viewport, and uses GLM-5.2 to generate bilingual (German + English) report cards and redesign mockups for the weakest sites. Later phases add human-approved WhatsApp outreach and a live call copilot with real-time ASR and RAG-backed suggestions — all gated by automated evals that must pass before any merge.
+Sales OS discovers owner-run local businesses via the Google Places API and ranks them by **missed-call exposure** — no online booking, no listed hours, reviews saying nobody picks up, owner-operated — to sell the AI phone receptionist (retargeted 2026-08-25; the original website-quality funnel with Playwright scoring and GLM-5.2 bilingual report cards is still available behind a flag). Later phases add human-approved WhatsApp outreach and a live call copilot with real-time ASR and RAG-backed suggestions — all gated by automated evals that must pass before any merge.
 
 ## Tech Stack
 
@@ -53,7 +53,7 @@ See [architecture.md](architecture.md) for the full stage-by-stage breakdown.
 
 ## Key Engineering Decisions
 
-- **Eval gates before merge.** Three automated eval suites (website scorer, outreach, copilot) must pass at ≥80% before any model or code change merges. All three currently sit at 100%. See [eval-results.md](eval-results.md).
+- **Eval gates before merge.** Three automated eval suites (website scorer, outreach, copilot) must pass at ≥80% before any model or code change merges. All three sat at 100% when measured (2026-07-07); the new offline exposure-scorer gate is 10/10 (2026-08-25). First live run 2026-08-25: 20 Berlin salons → 5 prospects for ~$0.83 in Places calls, 0 cold messages drafted (UWG §7 — consent first). See [eval-results.md](eval-results.md).
 - **Consent-gated outreach, enforced in code.** German UWG §7 requires prior express consent for unsolicited B2B electronic advertising. The drafter *raises an exception* if a lead lacks `consent=true` in the CRM — compliance is a code path, not a policy doc. No cold-blast tooling exists in the codebase by design.
 - **Nothing auto-sends, ever.** Every outbound WhatsApp message is a draft delivered to Telegram for explicit human approval via a `/send <token>` command. No code path can reach the send functions without prior approval.
 - **Mobile-first scoring model.** Websites are scored 0–100 at a 375px viewport with explicit defect codes per broken signal (HTTP-only, missing viewport meta, etc.) — because that's how the prospect's customers actually see their site.

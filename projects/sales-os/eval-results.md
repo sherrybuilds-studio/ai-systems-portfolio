@@ -1,10 +1,11 @@
 # Sales OS — Eval Results
 
-Every phase ships with an automated eval suite that acts as a merge gate: any model swap or code change must score **≥80%** on the relevant suite before it lands. All three suites currently pass at **100%**.
+Every phase ships with an automated eval suite that acts as a merge gate: any model swap or code change must score **≥80%** on the relevant suite before it lands. The three original suites passed at **100%** when measured (2026-07-07); the exposure-scorer gate added with the voice retarget is **10/10** (2026-08-25, offline, deterministic).
 
 | Suite | What it gates | Score |
 |-------|---------------|-------|
-| Website scorer eval | Phase 1 — quality scoring | **10/10 (100%)** |
+| Exposure scorer eval (2026-08-25) | Phase 1 — missed-call exposure, offline | **10/10 (100%)** |
+| Website scorer eval (2026-07-07) | Phase 1 legacy — website quality | **10/10 (100%)** |
 | Phase 2 eval | WhatsApp outreach + compliance | **17/17 (100%)** |
 | Phase 3 eval | Live call copilot | **14/14 (100%)** |
 

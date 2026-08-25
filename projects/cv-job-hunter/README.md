@@ -2,6 +2,8 @@
 
 An automated daily job-hunting pipeline for the Berlin AI/tech market. It scrapes multiple job boards, scores every listing against a candidate profile with fast rule-based matching, enriches promising leads with Playwright-driven contact discovery, generates tailored cover letters with Claude, and delivers a morning Telegram digest — fully hands-off from scrape to application-ready shortlist.
 
+> **Status (2026-08-25):** ran daily on cron; last run **2026-08-20** (105 scored matches on file). **Parked on 2026-08-23** to focus on the voice receptionist. Public code: [job-hunt-ai](https://github.com/sherrybuilds-studio/job-hunt-ai).
+
 ## Tech Stack
 
 - **Python** — pipeline stages as small, single-purpose modules

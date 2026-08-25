@@ -1,6 +1,8 @@
 # Restaurant Bot AI
 
-A conversational AI assistant for restaurants, delivered over Telegram. It handles food orders, table reservations, and menu/FAQ questions in multiple languages, answering from the restaurant's own menu data via retrieval-augmented generation (RAG) — so responses stay grounded in what the restaurant actually offers. Built as a productized service: one codebase, configured per restaurant, running 24/7 under process supervision.
+A conversational AI assistant for restaurants, delivered over Telegram. It handles food orders, table reservations, and menu/FAQ questions in multiple languages, answering from the restaurant's own menu data via retrieval-augmented generation (RAG) — so responses stay grounded in what the restaurant actually offers. Built as a productized service: one codebase, configured per restaurant, designed to run 24/7 under process supervision.
+
+> **Status (2026-08-25):** retrieval eval 10/10 on a fresh index today; the Telegram service is currently **offline** while the voice receptionist is the live product. Public code: [restaurant-bot-ai](https://github.com/sherrybuilds-studio/restaurant-bot-ai).
 
 ## What It Does
 
