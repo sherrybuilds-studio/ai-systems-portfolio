@@ -37,7 +37,7 @@ Playwright · OpenRouter · Langfuse · Docker · PM2 · httpx
 
 - Portfolio: [sherrybuilds.com](https://sherrybuilds.com)
 - Which product does what, mapped to real modules: [SOLUTIONS.md](SOLUTIONS.md)
-- Public code: [restaurant-bot-ai](https://github.com/sherrybuilds-studio/restaurant-bot-ai) · [job-hunt-ai](https://github.com/sherrybuilds-studio/job-hunt-ai) · [Interior-Bot-Ai](https://github.com/sherrybuilds-studio/Interior-Bot-Ai)
+- Public code: [reservation-agent](https://github.com/sherrybuilds-studio/reservation-agent) · [job-pipeline](https://github.com/sherrybuilds-studio/job-pipeline) · [commerce-rag-agent](https://github.com/sherrybuilds-studio/commerce-rag-agent)
 - Email: codewithsherry1@gmail.com
 
 ---
