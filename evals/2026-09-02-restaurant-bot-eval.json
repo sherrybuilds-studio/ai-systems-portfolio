@@ -1,0 +1,12 @@
+{
+ "date": "2026-09-02",
+ "app": "restaurant-bot",
+ "gate": "RAG retrieval (gold questions)",
+ "passed": 10,
+ "total": 10,
+ "score_pct": 100,
+ "threshold_pct": 100,
+ "avg_retrieval_score": 0.6464,
+ "ok": true,
+ "method": "make eval \u2192 uv run python tests/eval.py (offline, deterministic; chroma reindexed first)"
+}
