@@ -1,0 +1,29 @@
+{
+ "date": "2026-09-04",
+ "app": "sales-os",
+ "gates": [
+  {
+   "gate": "missed-call exposure scorer",
+   "passed": 10,
+   "total": 10,
+   "threshold_pct": 80,
+   "ok": true
+  },
+  {
+   "gate": "phase-2 outreach (HMAC, inbound, stage machine, drafter \u2014 mocked)",
+   "passed": 20,
+   "total": 21,
+   "score_pct": 95,
+   "threshold_pct": 80,
+   "ok": true
+  },
+  {
+   "gate": "phase-3 copilot (ASR parsing, suggestions, sessions \u2014 mocked)",
+   "passed": 14,
+   "total": 14,
+   "threshold_pct": 80,
+   "ok": true
+  }
+ ],
+ "method": "tests/eval_exposure.py, tests/eval_phase2.py, tests/eval_phase3.py \u2014 offline"
+}

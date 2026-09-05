@@ -1,0 +1,11 @@
+{
+ "date": "2026-09-02",
+ "app": "voice-receptionist",
+ "gate": "phase-7 outcome QA (golden calls)",
+ "passed": 12,
+ "total": 12,
+ "score_pct": 100,
+ "threshold_pct": 80,
+ "ok": true,
+ "method": "make eval \u2192 uv run python tests/eval_phase7.py (offline, deterministic rubric)"
+}

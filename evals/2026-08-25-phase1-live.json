@@ -1,0 +1,348 @@
+{
+  "date": "2026-08-25",
+  "query": "Friseursalon in Berlin Neukölln",
+  "product": "voice-receptionist",
+  "included_type": "hair_salon",
+  "excluded_types": [
+    "dentist",
+    "dental_clinic",
+    "doctor",
+    "hospital",
+    "medical_lab",
+    "physiotherapist",
+    "pharmacy",
+    "drugstore",
+    "veterinary_care",
+    "chiropractor",
+    "skin_care_clinic",
+    "wellness_center"
+  ],
+  "threshold": 50,
+  "places_returned": 20,
+  "leads": 20,
+  "prospects": 5,
+  "cost_estimate_usd": 0.832,
+  "top": [
+    {
+      "name": "bahaar design",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "unreachable_hits": 0,
+      "review_count": 104,
+      "rating": 4.9,
+      "website": "http://www.bahaardesign.de/",
+      "hours_listed": true,
+      "address": "Fritz-Erler-Allee 26, 12351 Berlin, Germany",
+      "maps_url": "https://maps.google.com/?cid=234102932877751150&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA"
+    },
+    {
+      "name": "Anne Rosenblatt Die Friseurmeisterin",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "unreachable_hits": 0,
+      "review_count": 23,
+      "rating": 5,
+      "website": "http://anne-rosenblatt.de/",
+      "hours_listed": true,
+      "address": "Schillerpromenade 9, 12049 Berlin-Bezirk Neukölln, Germany",
+      "maps_url": "https://maps.google.com/?cid=1364401557665514690&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA"
+    },
+    {
+      "name": "Hairdesign by Deinhard",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "unreachable_hits": 0,
+      "review_count": 274,
+      "rating": 4.6,
+      "website": "http://www.deinhard-friseurteam.de/",
+      "hours_listed": true,
+      "address": "Planetenstraße55 und in der, Drosselbartstraße 2, 12057 Berlin, Germany",
+      "maps_url": "https://maps.google.com/?cid=9245778226341863017&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA"
+    },
+    {
+      "name": "XL CUT Friseur Berlin Neukölln – Farbe, Schnitt & mehr ohne Termin",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "unreachable_hits": 0,
+      "review_count": 257,
+      "rating": 4.7,
+      "website": "http://www.xlcut.de/",
+      "hours_listed": true,
+      "address": "Karl-Marx-Straße 82, 12043 Berlin-Bezirk Neukölln, Germany",
+      "maps_url": "https://maps.google.com/?cid=4756238257663169692&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA"
+    },
+    {
+      "name": "Barber Salon Aida",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "unreachable_hits": 0,
+      "review_count": 175,
+      "rating": 4,
+      "website": "http://s660112838.website-start.de/kontakt/",
+      "hours_listed": true,
+      "address": "Hobrechtstraße 3, 12043 Berlin-Bezirk Neukölln, Germany",
+      "maps_url": "https://maps.google.com/?cid=2084808519883767960&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA"
+    }
+  ],
+  "all_scored": [
+    {
+      "name": "bahaar design",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 104,
+      "hours_listed": true,
+      "website": "http://www.bahaardesign.de/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Anne Rosenblatt Die Friseurmeisterin",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 23,
+      "hours_listed": true,
+      "website": "http://anne-rosenblatt.de/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Hairdesign by Deinhard",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 274,
+      "hours_listed": true,
+      "website": "http://www.deinhard-friseurteam.de/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "XL CUT Friseur Berlin Neukölln – Farbe, Schnitt & mehr ohne Termin",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 257,
+      "hours_listed": true,
+      "website": "http://www.xlcut.de/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Barber Salon Aida",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 175,
+      "hours_listed": true,
+      "website": "http://s660112838.website-start.de/kontakt/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Katjas Salon",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 101,
+      "hours_listed": true,
+      "website": "http://m.facebook.com/pages/category/Massage-Service/Katjas-Salon-1297595500287594/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Golden Touch Friseursalon in Berlin",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 88,
+      "hours_listed": true,
+      "website": "",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Daen & Lou's",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 134,
+      "hours_listed": true,
+      "website": "http://daenandlous.com/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Friseur im Sonnencenter",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 239,
+      "hours_listed": true,
+      "website": "",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Mohsen hairdressing salon",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 138,
+      "hours_listed": true,
+      "website": "",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Hair Sweet Hair",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 257,
+      "hours_listed": true,
+      "website": "https://hairsweethair.de/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Friseursalon Tevetoglu",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 53,
+      "hours_listed": true,
+      "website": "",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Friseur",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 159,
+      "hours_listed": true,
+      "website": "",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Madame K.",
+      "score": 50,
+      "signals": [
+        "no_online_booking",
+        "owner_operated_single_location"
+      ],
+      "review_count": 87,
+      "hours_listed": true,
+      "website": "http://www.madamek.de/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "ESHK Friseur Neukölln",
+      "score": 30,
+      "signals": [
+        "no_online_booking"
+      ],
+      "review_count": 914,
+      "hours_listed": true,
+      "website": "https://www.eshk-hair.com/salons/berlin-friseur-neukolln/?utm_source=googlemaps",
+      "category": "hair_salon"
+    },
+    {
+      "name": "The Barber Yard",
+      "score": 30,
+      "signals": [
+        "no_online_booking"
+      ],
+      "review_count": 1018,
+      "hours_listed": true,
+      "website": "https://barber-yard.com/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "La BarBer Queer",
+      "score": 30,
+      "signals": [
+        "no_online_booking"
+      ],
+      "review_count": 1803,
+      "hours_listed": true,
+      "website": "http://www.labarberberlin.de/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Studio 14",
+      "score": 20,
+      "signals": [
+        "owner_operated_single_location"
+      ],
+      "review_count": 253,
+      "hours_listed": true,
+      "website": "http://studio-14.mytreatwell.de/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Salon Top-Line",
+      "score": 20,
+      "signals": [
+        "owner_operated_single_location"
+      ],
+      "review_count": 79,
+      "hours_listed": true,
+      "website": "http://salon-top-line.mytreatwell.de/",
+      "category": "hair_salon"
+    },
+    {
+      "name": "Friseur La Bonita 1",
+      "score": 20,
+      "signals": [
+        "owner_operated_single_location"
+      ],
+      "review_count": 95,
+      "hours_listed": true,
+      "website": "https://la-bonita-hairstyling.mytreatwell.de/",
+      "category": "hair_salon"
+    }
+  ],
+  "drafts": {
+    "real_leads_drafted": 0,
+    "reason": "UWG §7 — cold leads have no documented opt-in; drafter raises by design",
+    "dogfood_lead_0": {
+      "lead": "Sherry — dogfood lead #0 (Salon Ayşe profile)",
+      "consent": true,
+      "de": "Ich bin Sherry und baue KI-Rezeptionisten für Salons; Ihre Bewertungen zeigen, dass oft niemand ans Telefon geht. Auf der Live-Rezeptionistin wurden 43 echte Anrufe protokolliert, und EU AI Act Art. 50 sowie §201 StGB Consent Handling sind integriert. Rufen Sie die Demo-Nummer +1 650 479 7535 an, um es selbst zu hören. Wäre das für Sie eine Erleichterung?",
+      "en": "Hi, Sherry here — I build AI phone receptionists for Berlin salons, and I noticed two of your reviews mention the phone going unanswered. The live receptionist has logged 43 real calls, with EU AI Act Art. 50 AI-disclosure and §201 StGB call-consent handling built in. Call +1 650 479 7535 to hear it yourself. Want to hear how it'd sound for your salon?"
+    }
+  }
+}

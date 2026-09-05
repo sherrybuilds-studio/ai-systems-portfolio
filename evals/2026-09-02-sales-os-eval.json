@@ -1,0 +1,12 @@
+{
+ "date": "2026-09-02",
+ "app": "sales-os",
+ "gate": "missed-call exposure scorer",
+ "passed": 10,
+ "total": 10,
+ "score_pct": 100,
+ "threshold_pct": 80,
+ "exclusion_filter": "ok",
+ "ok": true,
+ "method": "make eval \u2192 uv run python tests/eval_exposure.py (offline fixtures)"
+}
