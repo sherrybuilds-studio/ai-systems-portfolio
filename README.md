@@ -3,7 +3,7 @@
 **Shehryar Irfan** · AI Engineer · CS student, Arden University Berlin
 Production AI systems, built and operated solo on one VPS — with the eval gates, compliance evidence, and dated test results to prove they work.
 
-📞 **Call the live receptionist: +1 650 479 7535** — English or German. It tells you it's an AI in the first sentence (EU AI Act Art. 50), asks before recording (§201 StGB), captures your inquiry, and can book a viewing — every call leaves hash-chained compliance evidence and lands in the database at hang-up.
+📞 **Live voice demo on request — email me and Clara will be on the line within the hour.** English or German. It tells you it's an AI in the first sentence (EU AI Act Art. 50), asks before recording (§201 StGB), captures your inquiry, and can book a viewing — every call leaves hash-chained compliance evidence and lands in the database at hang-up.
 
 ---
 
@@ -11,7 +11,7 @@ Production AI systems, built and operated solo on one VPS — with the eval gate
 
 | System | Status | Dated proof |
 |---|---|---|
-| **AI Phone Receptionist** — bilingual (DE/EN) Vapi agent, FastAPI tool webhook, viewing bookings, per-call Art. 50 + §201 evidence | 🟢 Live — call it | [12/12 golden-call outcome eval · 2026-09-02](./evals/2026-09-02-voice-receptionist-eval.json) |
+| **AI Phone Receptionist** — bilingual (DE/EN) Vapi agent, FastAPI tool webhook, viewing bookings, per-call Art. 50 + §201 evidence | 🟢 Live — demo on request | [12/12 golden-call outcome eval · 2026-09-02](./evals/2026-09-02-voice-receptionist-eval.json) |
 | **Self-Healing Agent Fleet** — Postgres-leased dispatcher, 11 enabled agents, classify→policy→remediate self-healer, cost-truth ledger | 🟢 Live | [520 runs since Jul 9 · 0.8% hard failures · 471-task backlog cleared to zero](./evals/2026-08-25-fleet-stats.json) |
 | **Job Pipeline** — scrape 10 sources → score → tailored CV + cover letter per match → Telegram digest | 🟢 Runs daily | 220–290 postings/run · fully automated |
 | **This portfolio site** — Next.js 16, approval-gated CI/CD to GHCR, fail-closed auth on private routes, evidence strip generated from real eval JSONs, grounded chat widget | 🟢 Live | First automated release 2026-09-02 · [source](https://github.com/sherrybuilds-studio/sherrybuilds.com) |
