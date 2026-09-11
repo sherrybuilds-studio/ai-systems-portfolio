@@ -60,6 +60,6 @@ One VPS (Ubuntu, Docker + PM2) runs everything: Caddy gateway → FastAPI servic
 
 🌐 [sherrybuilds.com](https://sherrybuilds.com) — live demos and evidence
 💻 Public code: [reservation-agent](https://github.com/sherrybuilds-studio/reservation-agent) · [job-pipeline](https://github.com/sherrybuilds-studio/job-pipeline) · [commerce-rag-agent](https://github.com/sherrybuilds-studio/commerce-rag-agent)
-💼 [LinkedIn](https://www.linkedin.com/in/shehryar-irfan-bb5469349) · ✉️ [shehryarmughal30@gmail.com](mailto:shehryarmughal30@gmail.com)
+💼 [LinkedIn](https://www.linkedin.com/in/shehryar-irfan-bb5469349) · ✉️ [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com)
 
 *Open to Werkstudent roles in Berlin — remote-capable now, in Berlin full-time from 16 September.*
