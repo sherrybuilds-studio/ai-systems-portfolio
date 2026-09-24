@@ -1,0 +1,12 @@
+{
+  "date": "2026-09-24",
+  "since": "2026-07-09",
+  "runs": 1002,
+  "done": 803,
+  "skipped": 173,
+  "failed": 24,
+  "qa_fail": 0,
+  "hard_failure_pct": 2.4,
+  "active_agents": 13,
+  "method": "psql over agent_tasks on sherryos-postgres (127.0.0.1:5433), statuses counted where created_at >= since; active_agents = distinct agent values in the window; hard_failure_pct = failed/runs"
+}
