@@ -12,9 +12,9 @@ Production AI systems, built and operated solo on one VPS — with the eval gate
 | System | Status | Dated proof |
 |---|---|---|
 | **AI Phone Receptionist** — bilingual (DE/EN) Vapi agent, FastAPI tool webhook, viewing bookings, per-call Art. 50 + §201 evidence | 🟢 Live — demo on request | [12/12 golden-call outcome eval · 2026-09-02](./evals/2026-09-02-voice-receptionist-eval.json) |
-| **Self-Healing Agent Fleet** — Postgres-leased dispatcher, 11 enabled agents, classify→policy→remediate self-healer, cost-truth ledger | 🟢 Live | [520 runs since Jul 9 · 0.8% hard failures · 471-task backlog cleared to zero](./evals/2026-08-25-fleet-stats.json) |
-| **Job Pipeline** — scrape 10 sources → score → tailored CV + cover letter per match → Telegram digest | 🟢 Runs daily | 220–290 postings/run · fully automated |
-| **This portfolio site** — Next.js 16, approval-gated CI/CD to GHCR, fail-closed auth on private routes, evidence strip generated from real eval JSONs, grounded chat widget | 🟢 Live | First automated release 2026-09-02 · [source](https://github.com/sherrybuilds-studio/sherrybuilds.com) |
+| **Self-Healing Agent Fleet** — Postgres-leased dispatcher, 13 active agents, classify→policy→remediate self-healer, cost-truth ledger | 🟢 Live | [1,002 runs since Jul 9 · 2.4% hard failures · 2026-09-24](./evals/2026-09-24-fleet-stats.json) |
+| **Job Pipeline** — daily scoring cron + on-demand sourcing across 83 company career boards → tailored one-page CV + reviewed cover letter per match → Telegram digest | 🟢 Daily cron + on-demand | 3,085 postings in the last sourcing run · 83 career boards |
+| **This portfolio site** — Next.js 16, approval-gated CI/CD to GHCR, fail-closed auth on private routes, evidence strip generated from real eval JSONs, journaled contact pipeline with instant Telegram alerts | 🟢 Live | First automated release 2026-09-02 · [source](https://github.com/sherrybuilds-studio/sherrybuilds.com) |
 | **Sales OS** — lead discovery → missed-call scoring → consent-gated bilingual outreach (UWG §7) → call copilot | 🟡 Phase 1 live-tested | [20 places → 5 prospects, 2026-08-25](./evals/2026-08-25-phase1-live.json) · [gates 10/10 · 20/21 · 14/14](./evals/2026-09-04-sales-os-phase-gates.json) |
 | **Commerce RAG Agent** — WhatsApp sales assistant, hybrid keyword+semantic retrieval, semantic cache (95% cosine) | 🟡 Pilot | **38% token cost cut** (1,118 → 695/msg), measured in production |
 | **Restaurant Bot** — Telegram reservations + menu RAG | ⚪ Built, offline | [Retrieval eval 10/10 · 2026-09-02](./evals/2026-09-02-restaurant-bot-eval.json) |
@@ -27,7 +27,7 @@ Every green row answers traffic today. Every linked metric is a dated eval file 
 - **Eval-first.** Each product ships with an offline gate (voice 12/12, restaurant 10/10, sales 10/10); CI blocks any merge that drops one. Gates re-run nightly by the fleet's eval-runner agent.
 - **Compliance in code, not slides.** AI disclosure (Art. 50), recording consent (§201 StGB), and outreach consent (UWG §7) are enforced in the codebase and leave per-call evidence.
 - **Cost is a feature.** A cost-truth ledger caps fleet spend daily from real token usage; the 38% RAG optimization was measured, not guessed.
-- **Incidents are documented.** A fleet failure wave was root-caused to a model-routing mismatch and a 471-task backlog cleared to zero — today's hard-failure rate is 0.8% over 520 runs; three secret-leak paths were closed at the source. The debugging stories are part of the portfolio.
+- **Incidents are documented.** A fleet failure wave was root-caused to a model-routing mismatch and a 471-task backlog cleared to zero — hard-failure rate as of 2026-09-24: 2.4% over 1,002 runs since Jul 9; three secret-leak paths were closed at the source. The debugging stories are part of the portfolio.
 
 ## Patterns ready to deploy
 
@@ -62,4 +62,4 @@ One VPS (Ubuntu, Docker + PM2) runs everything: Caddy gateway → FastAPI servic
 💻 Public code: [reservation-agent](https://github.com/sherrybuilds-studio/reservation-agent) · [job-pipeline](https://github.com/sherrybuilds-studio/job-pipeline) · [commerce-rag-agent](https://github.com/sherrybuilds-studio/commerce-rag-agent)
 💼 [LinkedIn](https://www.linkedin.com/in/shehryar-irfan-bb5469349) · ✉️ [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com)
 
-*Open to Werkstudent roles in Berlin — remote-capable now, in Berlin full-time from 16 September.*
+*Open to Werkstudent roles in Berlin, on-site or remote.*
