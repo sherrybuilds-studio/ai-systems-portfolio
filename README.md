@@ -18,7 +18,7 @@ Production AI systems, built and operated solo on one VPS — with the eval gate
 | **Sales OS** — lead discovery → missed-call scoring → consent-gated bilingual outreach (UWG §7) → call copilot | 🟡 Phase 1 live-tested | [20 places → 5 prospects, 2026-08-25](./evals/2026-08-25-phase1-live.json) · [gates 10/10 · 20/21 · 14/14](./evals/2026-09-04-sales-os-phase-gates.json) |
 | **Commerce RAG Agent** — WhatsApp sales assistant, hybrid keyword+semantic retrieval, semantic cache (95% cosine) | 🟡 Pilot | **38% token cost cut** (1,118 → 695/msg), measured in production |
 | **Restaurant Bot** — Telegram reservations + menu RAG | ⚪ Built, offline | [Retrieval eval 10/10 · 2026-09-02](./evals/2026-09-02-restaurant-bot-eval.json) |
-| **Mehboob Steel** — WhatsApp assistant for a steel trader, Roman Urdu NLU, 14k-contact lookup | ⚪ Built, pending Meta connection | — |
+| **Steel Trading Assistant** — WhatsApp assistant for a steel trading business, Roman Urdu NLU, 14k-contact lookup | ⚪ Built, pending Meta connection | — |
 
 Every green row answers traffic today. Every linked metric is a dated eval file in [`/evals`](./evals) — nothing here is estimated.
 

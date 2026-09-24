@@ -6,7 +6,7 @@
 - **Embeddings service** — shared MiniLM service on port 7010 (all-MiniLM-L6-v2)
 - **Semantic cache** — cosine similarity threshold (0.92-0.95) to avoid repeat LLM calls
 
-## Hybrid Search (Montari Oak pattern)
+## Hybrid Search (commerce agent pattern)
 
 ```
 User query

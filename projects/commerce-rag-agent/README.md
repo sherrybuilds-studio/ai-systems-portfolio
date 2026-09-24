@@ -1,4 +1,4 @@
-# Montari Oak AI — WhatsApp Sales Bot with RAG
+# Commerce RAG Agent — WhatsApp Sales Bot with RAG
 
 An AI sales assistant for a luxury furniture brand in Lahore, running entirely over WhatsApp. It answers product questions from a RAG-backed catalogue (prices, wood types, finishes, lead times), holds a bilingual Urdu/English conversation in a respectful brand voice, and feeds a lead-generation pipeline that finds and scores high-value prospects automatically. Grounding is strict: the bot only quotes prices that exist in the vector store — it never invents them.
 

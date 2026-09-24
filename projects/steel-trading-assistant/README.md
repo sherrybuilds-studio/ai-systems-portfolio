@@ -1,4 +1,4 @@
-# Mehboob Steel — WhatsApp Business Assistant
+# Steel Trading Assistant — WhatsApp CRM & Voice Reminders
 
 A WhatsApp-native assistant for a steel trading business in Pakistan, built on top of a **~14,000-contact** customer base. The owner runs his entire workflow through WhatsApp: he photographs business cards to auto-capture contacts, dictates reminders by voice, and receives a scheduled morning digest of what's due — all in Roman Urdu, the language he actually uses. The bot turns an unstructured pile of 16k+ Google Contacts rows and paper business cards into a clean, deduplicated CRM with a conversational front end.
 
