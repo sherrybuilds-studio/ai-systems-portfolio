@@ -2,11 +2,11 @@
 
 ## Overview
 
-A single-VPS agent fleet: 54 agents cataloged, **17 enabled** (2026-08-25).
+A single-VPS agent fleet: 54 agents cataloged, **36 enabled** (2026-09-26; [roster](../evals/2026-09-26-fleet-agents.json)).
 One PostgreSQL-backed dispatcher leases tasks from a queue and spawns agents
-as headless Claude Code processes. Verified numbers (DB snapshot 2026-08-25):
-**520 runs since 2026-07-09, 0.8% hard failures** (343 done, 173 skipped,
-4 failed). Before the self-healer shipped on 2026-08-22, 43% of all runs
+as headless Claude Code processes. Verified numbers (DB snapshot 2026-09-24):
+**1,000 runs since 2026-07-09, 2.4% hard failures** (803 done, 173 skipped,
+24 failed; [snapshot](../evals/2026-09-24-fleet-stats.json)). Before the self-healer shipped on 2026-08-22, 43% of all runs
 (471 of 1,088) were failed or stale; that backlog drained to zero the same day.
 
 ## Flow
@@ -43,20 +43,15 @@ sherry-enqueue <agent> -m "task" --priority 2
   silently switches to metered billing). Sonnet/Opus tiers exist in the
   catalog for the few agents that need them.
 - **Product LLM calls** (RAG bots, Sales OS drafts and scoring) run on
-  **GLM-5.2 via OpenRouter**, cost-traced per app/agent in Langfuse.
+  **GLM-5.2 via OpenRouter**.
 - A cost-truth ledger prices every fleet run from token usage at list price,
   so the €10/day cap is enforced on real numbers.
 
-## Enabled agents (17)
+## Enabled agents (36, 2026-09-26)
 
-backup-verifier · cert-dns-checker · code-reviewer · conversation-qa ·
-cost-warden · deploy-monitor · docs-keeper · eval-runner · fleet-janitor ·
-incident-responder · lead-qualifier · log-summarizer · restaurant-keeper ·
-secret-guard · security-auditor · sentinel-prime · weekly-narrator
+backup-verifier · brand-voice-guard · bug-triager · case-study-writer · cert-dns-checker · claude-tracker · code-reviewer · conversation-qa · cost-warden · dependency-bumper · deploy-monitor · disk-ram-warden · docs-keeper · eval-runner · fact-checker · fleet-janitor · incident-responder · jobhunt-keeper · lead-qualifier · linkedin-ghostwriter · log-summarizer · montari-keeper · morning-researcher · outreach-drafter · perf-profiler · portfolio-keeper · prompt-tuner · rag-curator · restaurant-keeper · secret-guard · security-auditor · sentinel-prime · test-engineer · testimonial-collector · uni-assistant · weekly-narrator
 
-Grouped by team in the catalog: infra & security, code quality, product
-keepers, sales & growth, research & content. The other 37 are parked until a
-product needs them — an agent that isn't on a revenue path doesn't run.
+The other 18 stay off until a product needs them — an agent without real work doesn't run.
 
 ## Self-healing loop (2026-08-22)
 

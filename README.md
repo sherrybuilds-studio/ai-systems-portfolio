@@ -1,65 +1,65 @@
-# SherryBuilds — AI Systems Portfolio
+# AI Systems Portfolio
 
-**Shehryar Irfan** · AI Engineer · CS student, Arden University Berlin
-Production AI systems, built and operated solo on one VPS — with the eval gates, compliance evidence, and dated test results to prove they work.
+Shehryar Irfan · Berlin · [sherrybuilds.com](https://sherrybuilds.com) · [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com)
 
-📞 **Live voice demo on request — email me and Clara will be on the line within the hour.** English or German. It tells you it's an AI in the first sentence (EU AI Act Art. 50), asks before recording (§201 StGB), captures your inquiry, and can book a viewing — every call leaves hash-chained compliance evidence and lands in the database at hang-up.
+I build LLM systems and run them on one Linux server: a voice receptionist, an agent fleet that heals its own failures, a job-search pipeline, and retrieval assistants.
+This repo has the architecture notes and the dated eval files behind every number I publish.
+The product code lives in a private monorepo. The public code repos are linked at the bottom.
 
 ---
 
 ## Systems
 
-| System | Status | Dated proof |
+| System | State | Evidence |
 |---|---|---|
-| **AI Phone Receptionist** — bilingual (DE/EN) Vapi agent, FastAPI tool webhook, viewing bookings, per-call Art. 50 + §201 evidence | 🟢 Live — demo on request | [12/12 golden-call outcome eval · 2026-09-02](./evals/2026-09-02-voice-receptionist-eval.json) |
-| **Self-Healing Agent Fleet** — Postgres-leased dispatcher, 13 active agents, classify→policy→remediate self-healer, cost-truth ledger | 🟢 Live | [1,002 runs since Jul 9 · 2.4% hard failures · 2026-09-24](./evals/2026-09-24-fleet-stats.json) |
-| **Job Pipeline** — daily scoring cron + on-demand sourcing across 83 company career boards → tailored one-page CV + reviewed cover letter per match → Telegram digest | 🟢 Daily cron + on-demand | 3,085 postings in the last sourcing run · 83 career boards |
-| **This portfolio site** — Next.js 16, approval-gated CI/CD to GHCR, fail-closed auth on private routes, evidence strip generated from real eval JSONs, journaled contact pipeline with instant Telegram alerts | 🟢 Live | First automated release 2026-09-02 · [source](https://github.com/sherrybuilds-studio/sherrybuilds.com) |
-| **Sales OS** — lead discovery → missed-call scoring → consent-gated bilingual outreach (UWG §7) → call copilot | 🟡 Phase 1 live-tested | [20 places → 5 prospects, 2026-08-25](./evals/2026-08-25-phase1-live.json) · [gates 10/10 · 20/21 · 14/14](./evals/2026-09-04-sales-os-phase-gates.json) |
-| **Commerce RAG Agent** — WhatsApp sales assistant, hybrid keyword+semantic retrieval, semantic cache (95% cosine) | 🟡 Pilot | **38% token cost cut** (1,118 → 695/msg), measured in production |
-| **Restaurant Bot** — Telegram reservations + menu RAG | ⚪ Built, offline | [Retrieval eval 10/10 · 2026-09-02](./evals/2026-09-02-restaurant-bot-eval.json) |
-| **Steel Trading Assistant** — WhatsApp assistant for a steel trading business, Roman Urdu NLU, 14k-contact lookup | ⚪ Built, pending Meta connection | — |
+| **AI phone receptionist**: Vapi voice agent (German and English), FastAPI tool webhook for availability and bookings, AI disclosure (EU AI Act Art. 50) and recording consent (§201 StGB) at the start of every call, hash-chained evidence record per call | Deployed. Demo on request | [12/12 golden calls, 2026-09-02](./evals/2026-09-02-voice-receptionist-eval.json) |
+| **Agent fleet and self-healer**: Postgres-leased dispatcher that spawns Claude Code agents. 54 agents defined, 36 enabled. The self-healer sorts each failure into a failure class and then requeues, skips or escalates it | Running | [1,000 runs since 2026-07-09, 2.4% hard failures (snapshot 2026-09-24)](./evals/2026-09-24-fleet-stats.json) · [31 distinct agents run since 2026-07-09 (2026-09-26)](./evals/2026-09-26-fleet-agents.json) |
+| **Job pipeline**: daily scrape and rule-based scoring, plus an on-demand sourcing pass over company career boards. For each role it builds a tailored one-page CV and a cover letter that an independent reviewer checks | Daily cron at 08:00 UTC | [Run counts and sourcing totals, 2026-09-26](./evals/2026-09-26-job-pipeline.json) |
+| **Sales OS**: finds local businesses on Google Places, scores missed-call exposure, drafts outreach only when consent exists (UWG §7). Nothing sends without approval | Tested on one live run | [Scorer 10/10, 2026-09-02](./evals/2026-09-02-sales-os-eval.json) · [Live run: 20 places, 5 prospects, 2026-08-25](./evals/2026-08-25-phase1-live.json) · [Phase gates, 2026-09-04](./evals/2026-09-04-sales-os-phase-gates.json) |
+| **WhatsApp product assistant** for a furniture brand: hybrid keyword and vector retrieval, semantic cache at 0.95 cosine | Pilot | Prompt cut 38% (1,118 to 695 tokens per message) after retrieval replaced the full catalogue in the prompt, per the [changelog, 2026-04-27](https://github.com/sherrybuilds-studio/commerce-rag-agent/blob/main/CHANGELOG.md) |
+| **Restaurant reservation assistant**: bookings, waitlist, reminders, menu retrieval | Built, not deployed | [Retrieval 10/10, 2026-09-02](./evals/2026-09-02-restaurant-bot-eval.json) |
+| **WhatsApp assistant for a steel trading business**: contact lookup and reminders in Roman Urdu | Built, waiting for the Meta connection | none yet |
+| **This site**: [sherrybuilds.com](https://github.com/sherrybuilds-studio/sherrybuilds.com), Next.js, evidence section generated from these eval files | Live | First automated release 2026-09-02 |
 
-Every green row answers traffic today. Every linked metric is a dated eval file in [`/evals`](./evals) — nothing here is estimated.
-
-## Engineering approach
-
-- **Eval-first.** Each product ships with an offline gate (voice 12/12, restaurant 10/10, sales 10/10); CI blocks any merge that drops one. Gates re-run nightly by the fleet's eval-runner agent.
-- **Compliance in code, not slides.** AI disclosure (Art. 50), recording consent (§201 StGB), and outreach consent (UWG §7) are enforced in the codebase and leave per-call evidence.
-- **Cost is a feature.** A cost-truth ledger caps fleet spend daily from real token usage; the 38% RAG optimization was measured, not guessed.
-- **Incidents are documented.** A fleet failure wave was root-caused to a model-routing mismatch and a 471-task backlog cleared to zero — hard-failure rate as of 2026-09-24: 2.4% over 1,002 runs since Jul 9; three secret-leak paths were closed at the source. The debugging stories are part of the portfolio.
-
-## Patterns ready to deploy
-
-The systems above share one module library — RAG retrieval, semantic caching, eval gates, voice/WhatsApp/Telegram channels, consent-gated outreach, approval loops, compliance evidence, self-healing ops. From it, these variants are **days of assembly, not months of building**:
-
-- **Google review responder** — new reviews in, drafted replies out, human-approved before posting; sentiment routing for complaints. *(Reuses: RAG over past replies, the Sales OS approval loop, the restaurant bot's review_log schema.)*
-- **Missed-call rescue** — unanswered business calls get an instant AI callback; the caller's inquiry lands in the same lead pipeline as the receptionist. *(Reuses: voice stack, lead capture, Telegram alerting.)*
-- **Appointment reminder & no-show prevention** — confirmations and day-before reminders over the caller's channel. *(Reuses: reservation flow, appointments schema, scheduled jobs.)*
-- **Inbound email triage** — classify, draft, escalate; nothing sends without approval. *(Reuses: the job pipeline's scoring loop, the outreach drafter's approval gate.)*
-- **FAQ / order-status WhatsApp bot** — catalogue or policy RAG with the measured 38%-cheaper retrieval pattern. *(Reuses: commerce agent end to end.)*
-- **Lead-list builder** — discover businesses by niche + area, score them, deliver a ranked sheet. *(Reuses: Sales OS Phase 1, live-tested.)*
-
-## Designed, on the roadmap
-
-Specced on top of the same modules — deeper builds, engineered rather than assembled:
-
-- **"Clara calls you" demo widget** — visitor requests a call, gets phoned by the receptionist within seconds. The design covers OTP consent, per-number/per-IP rate limits, calling-hours windows, cost caps and a kill switch — because an outbound widget without them is a harassment tool.
-- **Multi-tenant voice** — one receptionist codebase, per-tenant prompts, numbers, and data isolation; the tenant config layer already exists in the voice app.
-- **Live call copilot** — real-time ASR → playbook RAG → nudges to a human agent mid-call; Phase 3 of Sales OS, built and gated offline (14/14), awaiting a live pilot.
-- **Call QA & coaching loop** — every production call graded on outcome, protocol and truthfulness by a QA agent (running today on the fleet), feeding weekly coaching summaries.
-- **Compliance evidence API** — the hash-chained Art. 50/§201 journal, exposed so any business can prove what its AI said and when.
+Every linked number comes from a file in [`/evals`](./evals). Each file records the date and the command or query that produced it.
 
 ## Architecture
 
-One VPS (Ubuntu, Docker + PM2) runs everything: Caddy gateway → FastAPI services → ChromaDB retrieval → Supabase/Postgres persistence. Fleet agents run on Claude (Haiku); product LLM calls route through OpenRouter. Full picture: [`architecture/fleet-overview.md`](./architecture/fleet-overview.md) · product-to-module map: [`SOLUTIONS.md`](./SOLUTIONS.md)
+```
+                 ┌──────────────── one Ubuntu VPS (Docker + PM2) ────────────────┐
+ phone ─ Vapi ──▶│ voice-receptionist (FastAPI tool webhook) ─┐                  │
+ WhatsApp ──────▶│ product / restaurant assistants ───────────┼─▶ ChromaDB       │
+                 │                                            └─▶ Postgres / Supabase
+                 │ job-hunter (PM2 cron 08:00 UTC) ──▶ Telegram digest           │
+                 │                                                               │
+                 │ dispatcher ──leases──▶ agent_tasks (Postgres) ◀── self-healer │
+                 │      └─ spawns Claude Code agents (allowlisted tools)         │
+                 └──── public traffic only through a Cloudflare tunnel ─────────┘
+```
 
-**Stack:** Python · FastAPI · Claude API · Vapi · Deepgram · ElevenLabs · ChromaDB · PostgreSQL · Supabase · Redis · Docker · PM2 · Caddy · Meta WhatsApp Cloud API · n8n · Next.js
+- Product LLM calls go through OpenRouter. Fleet agents run on Claude.
+- The self-healer runs every 30 minutes. It also runs six no-LLM script probes every 5 minutes, eight silent-failure probes, and event triggers for the sentinel and deploy-monitor agents.
+- More detail: [`architecture/fleet-overview.md`](./architecture/fleet-overview.md), [`architecture/rag-stack.md`](./architecture/rag-stack.md), [`architecture/eval-framework.md`](./architecture/eval-framework.md). Product-to-module map: [`SOLUTIONS.md`](./SOLUTIONS.md).
 
-## Links
+## How the evals work
 
-🌐 [sherrybuilds.com](https://sherrybuilds.com) — live demos and evidence
-💻 Public code: [reservation-agent](https://github.com/sherrybuilds-studio/reservation-agent) · [job-pipeline](https://github.com/sherrybuilds-studio/job-pipeline) · [commerce-rag-agent](https://github.com/sherrybuilds-studio/commerce-rag-agent)
-💼 [LinkedIn](https://www.linkedin.com/in/shehryar-irfan-bb5469349) · ✉️ [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com)
+- Each product has an offline, deterministic gate with a fixed set of golden cases. No live LLM calls are needed.
+- The voice gate and the restaurant gate run in CI on every push to the monorepo.
+- A fleet agent (`eval-runner`) re-runs the gates on a nightly schedule and flags regressions.
+- The fleet numbers come from a SQL count over the task table. The method is stored inside each snapshot file.
 
-*Open to Werkstudent roles in Berlin, on-site or remote.*
+## Using this repo
+
+This repo holds documents only, with no runnable service. [`docker-compose.example.yml`](./docker-compose.example.yml) is a template for the shared stack (Postgres, embeddings service, gateway) with every value left as an env var placeholder.
+
+## Limits
+
+- The restaurant assistant is not deployed. Sales OS has had one live discovery run.
+- The WhatsApp product assistant is a pilot. The 38% figure measures prompt size after the switch to retrieval, not a billing total.
+- Not built yet: missed-call text-back, Google review replies, a multi-tenant voice setup.
+
+## Public code
+
+[reservation-agent](https://github.com/sherrybuilds-studio/reservation-agent) · [commerce-rag-agent](https://github.com/sherrybuilds-studio/commerce-rag-agent) · [sherrybuilds.com](https://github.com/sherrybuilds-studio/sherrybuilds.com)
+
+MIT licensed. Contact: [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com) · [LinkedIn](https://www.linkedin.com/in/shehryar-irfan-bb5469349)

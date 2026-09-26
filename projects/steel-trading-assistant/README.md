@@ -19,7 +19,7 @@ A WhatsApp-native assistant for a steel trading business in Pakistan, built on t
 | Transcription | Device-side Whisper keyboard (primary), Whisper API (fallback) |
 | Database | Supabase (Postgres) — isolated project, RLS enabled |
 | Rate limiting | slowapi (per-endpoint request throttling) |
-| Observability | Langfuse tracing with PII redaction |
+| Observability | Langfuse tracing with PII redaction (parked 2026-09-02) |
 | Scheduling | Daily cron-style job (Asia/Karachi timezone) |
 
 ## Architecture

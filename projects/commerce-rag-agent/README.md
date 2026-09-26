@@ -14,7 +14,7 @@ An AI sales assistant for a luxury furniture brand in Lahore, running entirely o
 | LLM | Claude 3.5 Haiku via OpenRouter |
 | Chunking | LangChain `RecursiveCharacterTextSplitter` (512 chars, 100 overlap) |
 | CRM / storage | Supabase (leads), Google Sheets (outreach list) |
-| Observability | Langfuse (per-agent traces and cost tagging) |
+| Observability | Langfuse traces and cost tags (parked 2026-09-02) |
 | Automation | n8n (scheduled lead runs, error alerting) |
 | Eval / CI | 10-question eval gate (must score ≥ 80% to merge), ruff + pytest in CI |
 
