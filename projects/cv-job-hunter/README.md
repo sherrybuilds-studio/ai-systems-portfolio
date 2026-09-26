@@ -2,7 +2,7 @@
 
 An automated daily job-hunting pipeline for the Berlin AI/tech market. It scrapes multiple job boards, scores every listing against a candidate profile with fast rule-based matching, enriches promising leads with Playwright-driven contact discovery, generates tailored cover letters with Claude, and delivers a morning Telegram digest — fully hands-off from scrape to application-ready shortlist.
 
-> **Status (2026-08-25):** ran daily on cron; last run **2026-08-20** (105 scored matches on file). **Parked on 2026-08-23** to focus on the voice receptionist. Public code: [job-pipeline](https://github.com/sherrybuilds-studio/job-pipeline).
+> **Status (2026-09-26):** runs daily at 08:00 UTC — 308 to 383 postings per run over 22–26 Sep — plus an on-demand sourcing pass over 83 company career boards (2,981 postings on 26 Sep), with hard bars, an employer-page liveness check, a reviewer pass at zero unsupported claims and an output lint on every CV and letter. [Evidence](../../evals/2026-09-26-job-pipeline.json).
 
 ## Tech Stack
 

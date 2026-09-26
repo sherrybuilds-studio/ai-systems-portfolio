@@ -72,5 +72,5 @@ Pipeline behavior:
 ## Design Notes
 
 - **Deterministic, not ML.** Weights are hand-tuned business rules — transparent, auditable, and adjustable in one file. With low lead volume, a learned model would be overkill and unexplainable to the client.
-- **Breakdown over black box.** Persisting per-signal points with each lead made weight-tuning conversations with the client concrete ("location is over-weighted for our niche") instead of anecdotal.
+- **Breakdown over black box.** Persisting per-signal points with each lead made weight-tuning conversations with the business owner concrete ("location is over-weighted for our niche") instead of anecdotal.
 - **Freshness fails safe.** A malformed scrape date scores the minimum rather than crashing the batch.
