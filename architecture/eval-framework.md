@@ -2,57 +2,43 @@
 
 ## Principle
 
-Every AI feature has an automated test gate. A change that drops a product
-below its eval threshold (≥80%) must not merge. CI enforces this.
+Every AI feature has an automated gate. A change that drops a product below its threshold does not
+merge: the gate runs in CI and fails the build.
 
 ## Pattern
 
+```text
+1. Fix N known cases with the expected outcome (golden calls, gold questions, fixture leads)
+2. Run the feature against every case, offline: no live model, no network, no secrets
+3. Count the cases that behave as specified
+4. Gate: pass rate at or above the threshold → exit 0, else exit 1 and the merge is blocked
 ```
-1. Define N known test cases (10 for website scorer, 14-17 for pipeline gates)
-2. Run the feature against all cases
-3. Count correct classifications / passes
-4. Gate: pass_rate >= 80% → exit 0, else exit 1 (blocks merge)
-```
 
-## Real Examples (dated — see each product's `docs/evals/*.json`)
+Offline and deterministic matters: the same commit always gets the same score, so a drop is a real
+regression, not model noise.
 
-### Voice Receptionist — outcome QA (2026-08-25)
-- 12 golden call transcripts scored by a deterministic rubric: booking
-  outcome, number grounding (whole-token match), AI disclosure present,
-  recording-consent handling
-- Offline, no LLM in the loop; wired into `make eval` and CI
-- Result: 12/12 (100%)
+## Current gates (dated results in [`evals/`](../evals))
 
-### Sales OS — missed-call exposure scorer (2026-08-25)
-- 10 fixture leads (5 high exposure, 5 low) + a medical/dental exclusion check
-- Pure function, no network; gate ≥80%
-- Result: 10/10 (100%)
+| Product | What the gate checks | Result | Threshold | File |
+| --- | --- | --- | --- | --- |
+| Voice receptionist | 12 golden call transcripts scored by a deterministic rubric: booking outcome, number grounding, AI disclosure present, recording-notice handling | 12 of 12 | 80% | [2026-09-02](../evals/2026-09-02-voice-receptionist-eval.json) |
+| Restaurant assistant | 10 gold questions against a freshly rebuilt ChromaDB index with hybrid search | 10 of 10, average retrieval score 0.646 | 100% | [2026-09-02](../evals/2026-09-02-restaurant-bot-eval.json) |
+| Sales OS, exposure scorer | 10 fixture leads (5 high exposure, 5 low) plus a check that medical and dental businesses are excluded | 10 of 10 | 80% | [2026-09-02](../evals/2026-09-02-sales-os-eval.json) |
+| Sales OS, outreach | HMAC verification, inbound parsing, the 24-hour session window, template bodies, the stage machine and the UWG §7 consent gate, all mocked | 20 of 21 | 80% | [2026-09-04](../evals/2026-09-04-sales-os-phase-gates.json) |
+| Sales OS, call copilot | ASR parsing, playbook retrieval with fake embeddings, suggestion caps, session recovery | 14 of 14 | 80% | [2026-09-04](../evals/2026-09-04-sales-os-phase-gates.json) |
 
-### Restaurant Bot — RAG retrieval (2026-08-25)
-- 10 gold-standard questions against a freshly rebuilt ChromaDB index, hybrid search
-- No LLM calls, no secrets; CI rebuilds the index and blocks the merge below 10/10
-- Result: 10/10 (100%), average retrieval score 0.646
+The voice and restaurant gates run in the monorepo's CI on every push, together with the portfolio-chat
+gate: 12 cases covering answers with citations, refusals of out-of-scope questions, and prompt-injection
+blocking, plus a grep that fails on any retracted number.
 
-### Sales OS — Phase 1: Website Scorer (2026-07-07)
-- 10 known websites: 5 healthy (Google, Wikipedia, Stripe, GitHub, Apple)
-- 5 broken (HTTP-only, no viewport meta, etc.)
-- Gate: classification accuracy ≥ 80%
-- Result: 10/10 (100%)
+## Beyond the product gates
 
-### Sales OS — Phase 2: WhatsApp Outreach (2026-07-07)
-- 17 tests: HMAC verification, inbound parsing, 24h session window,
-  template body formatting, stage machine, UWG §7 consent gate
-- Fully mocked (no network)
-- Result: 17/17 (100%)
+- **Job pipeline:** every CV and cover letter passes an independent reviewer that must find zero
+  unsupported claims before anything is sent, and an output lint.
+- **Agent fleet:** agent work reaches main only through the lander, which requires every CI check to
+  be green on the exact commit it merges.
 
-### Sales OS — Phase 3: Call Copilot (2026-07-07)
-- 14 tests: ASR parsing, playbook indexing/retrieval (fake embeddings),
-  suggestion filtering/caps, session lifecycle, delivery formatting
-- Fully mocked
-- Result: 14/14 (100%)
+## Why it matters
 
-## Why It Matters
-
-When switching from one LLM to another (e.g., Claude → GLM-5.2), the eval
-gate catches regressions before they reach production. A model that scores
-below 80% on the eval doesn't ship — period.
+When the product model changes (for example Claude to GLM-5.2), the gates catch regressions before
+they reach a customer. A model that scores below the threshold does not ship.
