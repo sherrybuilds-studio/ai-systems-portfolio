@@ -1,76 +1,103 @@
 # Sales OS
 
-**An end-to-end, compliance-first sales pipeline for a done-for-you website service.**
+**A compliance-first lead pipeline for the AI phone receptionist.**
 
-Sales OS discovers owner-run local businesses via the Google Places API and ranks them by **missed-call exposure** — no online booking, no listed hours, reviews saying nobody picks up, owner-operated — to sell the AI phone receptionist (retargeted 2026-08-25; the original website-quality funnel with Playwright scoring and GLM-5.2 bilingual report cards is still available behind a flag). Later phases add human-approved WhatsApp outreach and a live call copilot with real-time ASR and RAG-backed suggestions — all gated by automated evals that must pass before any merge.
+Sales OS finds owner-run local businesses on Google Places and ranks them by **missed-call exposure**: no
+online booking, no listed opening hours, reviews saying nobody picks up, one owner running one location.
+Outreach is prepared only for businesses that have given consent, every message waits for a human to
+approve it, and a live call copilot suggests answers during sales calls. Every phase is gated by an
+automated eval before any change merges.
 
-## Tech Stack
+> **Status (2026-09-28):** built and tested, run by hand. Gates: exposure scorer 10 of 10
+> ([2026-09-02](../../evals/2026-09-02-sales-os-eval.json)); outreach 20 of 21 and copilot 14 of 14
+> ([2026-09-04](../../evals/2026-09-04-sales-os-phase-gates.json)). The code is private.
 
-- **Python** — ~3,700 lines across 30 modules, plus one HTML overlay
-- **Google Places API (New)** — Text Search + Details for lead discovery (httpx with retry, ~$0.07/lead)
-- **Playwright** — headless website quality scoring at a 375px mobile viewport
-- **GLM-5.2** — all LLM calls: preview cards, outreach drafts, call suggestions, summaries
-- **Supabase (Postgres)** — CRM tables for leads, conversations, and calls
-- **Telegram Bot API** — pipeline digests and the human approval loop
-- **Meta WhatsApp Cloud API** — templates, session messages, HMAC-verified webhooks (built from scratch)
-- **Deepgram Nova-3** — streaming ASR over WebSocket (multilingual DE/EN code-switching)
-- **ChromaDB** — RAG playbook index (sales playbook, objection handling, pricing FAQ)
-- **FastAPI + SSE** — live browser overlay for the call copilot
+## Was Sales OS macht (kurz auf Deutsch)
 
-## Architecture Flow
+Sales OS findet inhabergeführte Betriebe auf Google Places und bewertet, wie viele Anrufe dort
+voraussichtlich unbeantwortet bleiben. Nachrichten werden nur für Betriebe mit Einwilligung vorbereitet
+(UWG §7), und keine Nachricht wird ohne Freigabe durch einen Menschen verschickt.
 
-```
-Phase 1 — Lead Machine
-  "restaurants in <city district>"
+## What it does
+
+1. **Discovery**: a niche search on Google Places (for example salons in one district), then details per
+   business. Medical and dental businesses are excluded by design.
+2. **Exposure scoring**: a pure function scores each business on the signals above and keeps the ones
+   above a threshold as prospects.
+3. **Consent-first outreach**: bilingual drafts (German and English) only for leads with recorded
+   consent (UWG §7). Each draft goes to Telegram, where the operator sends it with `/send` or drops it
+   with `/skip`.
+4. **Follow-ups and re-engagement**: a CRM stage machine computes which follow-ups are due and drafts them
+   the same way.
+5. **Live call copilot**: streaming speech-to-text during a sales call, retrieval over a sales playbook,
+   and at most two short suggestions at a time in a browser overlay; a bilingual summary lands in the CRM
+   after the call.
+
+## Tech stack
+
+- **Python**: small single-purpose modules, wired by orchestrators
+- **Google Places API (New)**: Text Search and Place Details for discovery (httpx with retry)
+- **GLM-5.2 through OpenRouter**: drafts, call suggestions, summaries
+- **Supabase (Postgres)**: CRM tables for leads, conversations and calls
+- **Telegram Bot API**: pipeline digests and the human approval loop
+- **Meta WhatsApp Cloud API**: templates, session messages, HMAC-verified webhooks, built from scratch
+- **Deepgram Nova-3**: streaming speech-to-text over WebSocket, German and English in the same call
+- **ChromaDB**: playbook index (sales playbook, objection handling, pricing FAQ)
+- **FastAPI with server-sent events**: the live browser overlay for the copilot
+- **Playwright**: the earlier website-quality scorer, still available behind a flag
+
+## Architecture
+
+```text
+Phase 1 — Lead discovery
+  "hair salons in <district>"
         │
         ▼
   Discovery ──── Google Places Text Search + Details
         │
         ▼
-  Normalizer ─── Places record → lead dict
-        │
+  Exposure scorer ─── no online booking · no listed hours · "nobody answers" reviews · owner-run
+        │             (medical and dental excluded)
         ▼
-  Quality Scorer ─── Playwright, mobile viewport, 0-100 score + defect codes
-        │
-        ▼
-  Preview Generator ─── GLM-5.2 → report card + redesign mockup (DE + EN)
-        │
-        ▼
-  Orchestrator ─── discover → score → preview → CRM upsert → Telegram digest
-                   (worst website first; --dry-run skips all writes)
+  Orchestrator ─── discover → score → CRM upsert → Telegram digest   (--dry-run skips all writes)
 
-Phase 2 — WhatsApp Outreach (human-in-the-loop)
-  Consented leads → GLM-5.2 bilingual drafts → Telegram approval
-  (/send or /skip) → Meta Cloud API → CRM stage advance + inbound inbox
+Phase 2 — WhatsApp outreach (human in the loop)
+  Consented leads → GLM-5.2 bilingual drafts → Telegram approval (/send or /skip)
+  → Meta Cloud API → CRM stage advance + inbound inbox
 
-Phase 3 — Live Call Copilot
+Phase 3 — Live call copilot
   Call audio → Deepgram streaming ASR → crash-safe session journal
-  → RAG playbook + GLM-5.2 → ≤2 high-confidence nudges
-  → Telegram + SSE browser overlay → post-call bilingual summary → CRM
+  → playbook retrieval + GLM-5.2 → at most 2 suggestions above 0.6 confidence
+  → Telegram + browser overlay → bilingual summary after the call → CRM
 ```
 
-See [architecture.md](architecture.md) for the full stage-by-stage breakdown.
+See [architecture.md](architecture.md) for the stage-by-stage breakdown.
 
-## Key Engineering Decisions
+## Key engineering decisions
 
-- **Eval gates before merge.** Three automated eval suites (website scorer, outreach, copilot) must pass at ≥80% before any model or code change merges. All three sat at 100% when measured (2026-07-07); the new offline exposure-scorer gate is 10/10 (2026-08-25). First live run 2026-08-25: 20 Berlin salons → 5 prospects for ~$0.83 in Places calls, 0 cold messages drafted (UWG §7 — consent first). See [eval-results.md](eval-results.md).
-- **Consent-gated outreach, enforced in code.** German UWG §7 requires prior express consent for unsolicited B2B electronic advertising. The drafter *raises an exception* if a lead lacks `consent=true` in the CRM — compliance is a code path, not a policy doc. No cold-blast tooling exists in the codebase by design.
-- **Nothing auto-sends, ever.** Every outbound WhatsApp message is a draft delivered to Telegram for explicit human approval via a `/send <token>` command. No code path can reach the send functions without prior approval.
-- **Mobile-first scoring model.** Websites are scored 0–100 at a 375px viewport with explicit defect codes per broken signal (HTTP-only, missing viewport meta, etc.) — because that's how the prospect's customers actually see their site.
-- **Bounded concurrency.** Playwright browser contexts are capped at 2 to keep the pipeline from degrading co-hosted services on a memory-constrained box.
-- **Silent copilot beats a crashing one.** The live-call suggestion engine never raises — any failure returns an empty suggestion list. Suggestions are hard-capped (max 2, ≥0.6 confidence), throttled, and semantically cached so repeat objections don't buy repeat LLM calls mid-call.
-- **Crash-safe call sessions.** Every session mutation is journaled to disk, so a mid-call crash can recover the full transcript and state.
-- **Graceful degradation.** Missing CRM credentials never crash the pipeline — results are persisted to disk as the fallback record of truth.
-- **24h session window tracking.** WhatsApp free-form messages are only sent inside Meta's 24-hour window; outside it, the system falls back to a pre-approved template.
+- **Consent enforced in code.** German UWG §7 requires prior express consent for electronic advertising.
+  The drafter raises an exception for any lead without `consent=true` in the CRM. No cold-messaging tool
+  exists in the codebase.
+- **Nothing sends by itself.** Every outbound message is a draft that a human approves in Telegram; no
+  code path reaches the send functions without that approval.
+- **A deterministic scorer.** Exposure scoring is a pure function over the Places data, so every score is
+  explainable and the gate runs offline on fixtures.
+- **A silent copilot beats a crashing one.** The suggestion engine never raises: any failure returns an
+  empty list. Suggestions are capped, throttled and semantically cached so a repeated objection does not
+  buy a repeated model call mid-call.
+- **Crash-safe call sessions.** Every session change is journaled to disk, so a crash mid-call loses
+  nothing.
+- **Graceful degradation.** Missing CRM credentials never crash the pipeline; results fall back to disk as
+  the record.
+- **The 24-hour window.** Free-form WhatsApp messages go out only inside Meta's 24-hour session window;
+  outside it, the system uses a pre-approved template.
 
-## Eval Results
+## Eval gates
 
-**100% on all three gates** (threshold to merge: ≥80%):
+| Gate | What it checks | Result |
+| --- | --- | --- |
+| Exposure scorer | 10 fixture leads, 5 high and 5 low exposure, plus the medical and dental exclusion | **10 of 10** |
+| Phase 2, outreach | HMAC, session windows, the stage machine, the consent gate (mocked) | **20 of 21** |
+| Phase 3, copilot | ASR parsing, playbook retrieval, suggestion caps, sessions (mocked) | **14 of 14** |
 
-| Gate | Scope | Result |
-|------|-------|--------|
-| Website scorer | 10 known sites, healthy vs. broken classification | **10/10** |
-| Phase 2 — outreach | HMAC, session windows, stage machine, consent gate | **17/17** |
-| Phase 3 — copilot | ASR parsing, RAG retrieval, suggestion caps, sessions | **14/14** |
-
-Full breakdown in [eval-results.md](eval-results.md).
+Threshold to merge: 80%. Details in [eval-results.md](eval-results.md).

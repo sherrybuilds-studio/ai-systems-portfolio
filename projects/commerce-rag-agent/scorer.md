@@ -1,6 +1,6 @@
 # Lead Scoring Model
 
-The lead-generation pipeline scrapes public property portals for luxury real-estate listings (the target customer for high-end furniture: someone who just bought an expensive, unfurnished home). Every raw listing is scored 0–100 across four weighted signals, filtered, tiered, and sorted so the sales team always contacts the best leads first.
+The lead-generation pipeline reads public property portals for high-end real-estate listings (the target customer for premium furniture: someone who just bought an expensive, unfurnished home). Every raw listing is scored 0–110 across four weighted signals, filtered, tiered, and sorted so the sales team always contacts the best leads first.
 
 ## Signals and Weights
 
@@ -11,9 +11,11 @@ The lead-generation pipeline scrapes public property portals for luxury real-est
 | Listing freshness | 20 | New buyers furnish soon after purchase; stale listings go cold |
 | Property type | 10 | Houses/villas need far more furniture than apartments |
 
-Maximum total: 100 (price and location dominate by design — a fresh cheap flat should never outrank a week-old villa).
+Maximum total: 110 (price and location dominate by design — a fresh cheap flat should never outrank a week-old villa).
 
 ### Price (max 40)
+
+Price bands are set in the local currency of the market, from the top of the range down:
 
 | Property value | Points |
 |---|---|
@@ -33,6 +35,8 @@ Areas are bucketed into three prestige tiers (matched against listing location *
 | Tier 3 — standard | the remaining residential districts | 15 |
 | Unrecognized | — | 10 |
 
+The district lists are configuration, one per city.
+
 ### Freshness (max 20)
 
 | Listing age | Points |
@@ -40,7 +44,7 @@ Areas are bucketed into three prestige tiers (matched against listing location *
 | < 24 hours | 20 |
 | < 3 days | 15 |
 | < 7 days | 10 |
-| older / unparseable date | 5 |
+| older, or the date cannot be parsed | 5 |
 
 ### Property type (max 10)
 
@@ -50,7 +54,7 @@ Keyword match on the listing title:
 |---|---|
 | House, villa, farmhouse or bungalow | 10 |
 | No type keyword found | 7 |
-| Apartment / flat / studio | 5 |
+| Apartment, flat or studio | 5 |
 
 Unknown types score *between* houses and apartments deliberately — absence of evidence shouldn't punish a lead below a known apartment.
 
@@ -71,6 +75,6 @@ Pipeline behavior:
 
 ## Design Notes
 
-- **Deterministic, not ML.** Weights are hand-tuned business rules — transparent, auditable, and adjustable in one file. With low lead volume, a learned model would be overkill and unexplainable to the client.
+- **Deterministic, not ML.** Weights are hand-tuned business rules — transparent, auditable, and adjustable in one file. With low lead volume, a learned model would be overkill and impossible to explain to the business owner.
 - **Breakdown over black box.** Persisting per-signal points with each lead made weight-tuning conversations with the business owner concrete ("location is over-weighted for our niche") instead of anecdotal.
 - **Freshness fails safe.** A malformed scrape date scores the minimum rather than crashing the batch.

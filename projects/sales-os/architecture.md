@@ -4,30 +4,32 @@ Three phases, built in order of value: first a lead machine, then compliant outr
 
 ## Pipeline Diagram
 
-```
-Phase 1 — Sales Weapon
-  "restaurants in <city district>"
+```text
+Phase 1 — Lead discovery   (python3 pipeline/run.py "<niche> in <district>" [--dry-run])
+  "hair salons in <district>"
     │
     ▼
   Discovery module ──── Google Places API (New) Text Search + Details
-    │                   httpx with retry, ~$0.07 per lead
+    │                   httpx with retry
     ▼
   Normalizer ─── raw Places record → clean lead dict
     │
     ▼
-  Quality scorer ─── Playwright mobile viewport (375px), 0-100 score
-    │                concurrency capped at 2, defect codes per broken signal
+  Exposure scorer ─── pure function: no online booking, no listed hours,
+    │                 "nobody answers" reviews, owner-run single location;
+    │                 medical and dental businesses excluded
     ▼
-  Preview generator ─── GLM-5.2 → report card + redesign mockup HTML
-    │                   in BOTH German and English (4 files per prospect)
-    ▼
-  Pipeline orchestrator ─── discover → score → preview → CRM → Telegram
-    │                       --dry-run flag skips CRM writes + Telegram
-    ▼
-  CRM layer ─── Supabase lead upsert + stage machine
+  Prospects ─── leads at or above the exposure threshold
     │
     ▼
-  Telegram digest ─── top prospects, worst website first
+  CRM layer ─── Supabase lead upsert + stage machine   (--dry-run skips it)
+    │
+    ▼
+  Telegram digest ─── top prospects with their signals  (--dry-run skips it)
+
+  Earlier product, still behind --product website:
+  Playwright website-quality scorer (375px viewport, 0–100, defect codes)
+  → GLM-5.2 report card and redesign mockup in German and English
 
 Phase 2 — WhatsApp Outreach (human-in-the-loop)
   Outreach orchestrator (--draft)
@@ -72,15 +74,14 @@ Phase 3 — Live Call Copilot
 
 ## Stage Descriptions
 
-### Phase 1 — Lead Discovery and Website Preview
+### Phase 1 — Lead Discovery and Exposure Scoring
 
-- **Discovery.** Queries the Google Places API (New) with a natural-language niche search ("restaurants in ..."), then fetches details per result. Built on httpx with retry logic; cost works out to roughly $0.07 per lead.
+- **Discovery.** Queries the Google Places API (New) with a niche search ("hair salons in ..."), then fetches details per result. Built on httpx with retry logic.
 - **Normalizer.** Flattens the verbose Places response into a compact lead dict the rest of the pipeline consumes.
-- **Quality scorer.** Loads each prospect's website in Playwright at a 375px mobile viewport and produces a 0–100 score, with an explicit defect code for every broken signal (HTTP-only, missing viewport meta, and similar). Browser concurrency is capped at 2 to protect co-hosted services on constrained hardware.
-- **Preview generator.** For low-scoring sites, GLM-5.2 produces a report card plus a redesign mockup — in both German and English, four HTML files per prospect.
-- **Orchestrator.** Runs the full chain (discover → score → preview → CRM upsert → Telegram digest) and supports a `--dry-run` mode that skips all external writes.
+- **Exposure scorer.** A pure function that scores each lead for missed-call exposure from the Places data: no online booking, no listed opening hours, reviews that say nobody picks up, and an owner-run single location. Medical and dental businesses are excluded. Because it needs no network, its gate runs offline on fixtures.
 - **CRM layer.** Upserts leads into Supabase and drives the stage machine. Degrades gracefully: with no credentials configured it doesn't crash — local disk becomes the record.
-- **Telegram digest.** Delivers the top prospects to the operator, sorted worst-website-first, since the worst site is the strongest pitch.
+- **Telegram digest.** Delivers the top prospects and the signals behind each score to the operator.
+- **Earlier website funnel.** Behind `--product website`: Playwright scores each prospect's website at a 375px mobile viewport (0–100 with a defect code per broken signal, browser concurrency capped at 2), and GLM-5.2 writes a report card and a redesign mockup in German and English.
 
 ### Phase 2 — WhatsApp Outreach (Human-in-the-Loop)
 
