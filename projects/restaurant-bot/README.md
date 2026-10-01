@@ -7,7 +7,9 @@ retrieval, so the bot never invents a dish, a price or an allergen.
 > **Status (2026-09-28):** built and tested, not deployed. Retrieval gate 10 of 10
 > ([eval, 2026-09-02](../../evals/2026-09-02-restaurant-bot-eval.json)).
 > Public code: [reservation-agent](https://github.com/sherrybuilds-studio/reservation-agent), the WhatsApp
-> side with a demo restaurant and its eval.
+> side with a fictional demo restaurant, offline unit tests, and its own retrieval eval (10 of 10,
+> [2026-10-01](https://github.com/sherrybuilds-studio/reservation-agent/blob/main/evals/2026-10-01-retrieval-eval.json)),
+> re-run by CI on every push.
 
 ## What it does
 

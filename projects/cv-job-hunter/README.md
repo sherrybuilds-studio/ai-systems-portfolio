@@ -12,7 +12,7 @@ Nothing is sent automatically; a person sends every application.
 ## Two passes and a kit builder
 
 **Daily run.** Scrapes job boards, drops roles that fail a hard requirement, scores the rest with rules
-(no model call), researches the strong matches and sends a Telegram digest. A small graph decides between
+(no model call), prepares a tailored CV for each strong match and sends a Telegram digest. A small graph decides between
 researching, widening the search and reporting "no jobs today".
 
 **Sourcing pass, on demand.** Pulls company career boards directly (Greenhouse, Ashby, Lever, Personio,
@@ -32,7 +32,7 @@ DAILY RUN (cron, 08:00 UTC)
                ┌───────────────────────────┼──────────────────────────┐
                ▼                           ▼                          ▼
          strong match               weak match                   no match
-    research + enrich         widen the search, retry         "no jobs today"
+       tailored CV            widen the search, retry         "no jobs today"
                └──────────────▶ Telegram digest ◀─────────────────────┘
 
 SOURCING PASS (on demand)
