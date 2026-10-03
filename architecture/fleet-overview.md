@@ -45,7 +45,7 @@ Agent output → Telegram digest, CRM, or a branch for the lander
 | --- | --- |
 | Infrastructure and security (14) | sentinel-prime · security-auditor · incident-responder · backup-verifier · disk-ram-warden · cert-dns-checker · dependency-bumper · log-summarizer · secret-scanner · secret-guard · fleet-janitor · deploy-monitor · stripe-billing-guard · cost-warden |
 | Code quality (9) | code-reviewer · test-engineer · eval-runner · refactor-surgeon · bug-triager · perf-profiler · docs-keeper · merge-captain · migration-foreman |
-| Product delivery (9) | montari-keeper · restaurant-keeper · jobhunt-keeper · rag-curator · prompt-tuner · conversation-qa · whatsapp-launcher · interior-bot-builder · demo-builder |
+| Product delivery (9) | commerce-keeper · restaurant-keeper · jobhunt-keeper · rag-curator · prompt-tuner · conversation-qa · whatsapp-launcher · interior-bot-builder · demo-builder |
 | Growth and sales (8) | lead-qualifier · outreach-drafter · proposal-writer · pipeline-analyst · competitor-watcher · market-scanner · testimonial-collector · pricing-strategist |
 | Research and learning (7) | morning-researcher · claude-tracker · fact-checker · paper-digester · tool-scout · uni-assistant · idea-curator |
 | Content and brand (7) | content-strategist · linkedin-ghostwriter · case-study-writer · portfolio-keeper · video-script-writer · brand-voice-guard · weekly-narrator |
