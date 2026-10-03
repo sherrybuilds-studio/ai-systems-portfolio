@@ -2,7 +2,7 @@
 
 **Shehryar Irfan** · Berlin · [sherrybuilds.com](https://sherrybuilds.com) · [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com) · [LinkedIn](https://www.linkedin.com/in/shehryar-irfan-bb5469349)
 
-I build LLM systems for small businesses and run them in production on one Linux server: an AI phone receptionist, a self-healing fleet of 54 Claude Code agents, a job-search pipeline, and retrieval assistants on WhatsApp.
+I build LLM systems for small businesses and run them in production on one Linux server: an AI phone receptionist, a self-healing fleet of 54 Claude Code agents, a job-search pipeline, retrieval assistants on WhatsApp, and a fail-closed validation pipeline for trading strategies.
 
 This repository holds the architecture notes and the dated eval files behind every number I publish. The product code lives in a private monorepo; the public code is listed under [Public code](#public-code).
 
@@ -18,7 +18,7 @@ This repository holds the architecture notes and the dated eval files behind eve
 | **[Sales OS](./projects/sales-os/)** | Finds owner-run local businesses on Google Places, scores how many calls each one is likely to miss, and prepares outreach only where consent exists (UWG §7). Nothing sends without human approval | Built, run by hand | [Scorer 10 of 10](./evals/2026-09-02-sales-os-eval.json) · [phase gates](./evals/2026-09-04-sales-os-phase-gates.json) |
 | **[WhatsApp product assistant](./projects/commerce-rag-agent/)** · [code](https://github.com/sherrybuilds-studio/commerce-rag-agent) | Answers product questions for a furniture brand from its own catalogue: keyword match first, vector search second, semantic cache at 0.95 cosine | Pilot | Prompt cut 38% (1,118 to 695 tokens per message) when retrieval replaced the full catalogue, [changelog, 27 Apr 2026](https://github.com/sherrybuilds-studio/commerce-rag-agent/blob/main/CHANGELOG.md) |
 | **[Restaurant reservation assistant](./projects/restaurant-bot/)** · [code](https://github.com/sherrybuilds-studio/reservation-agent) | Reservations, waitlist, reminders and menu answers over WhatsApp | Built, not deployed | [Retrieval 10 of 10](./evals/2026-09-02-restaurant-bot-eval.json), 2 Sep 2026 · public repo [10 of 10](https://github.com/sherrybuilds-studio/reservation-agent/blob/main/evals/2026-10-01-retrieval-eval.json), 1 Oct 2026, re-run by CI |
-| **[Steel trading assistant](./projects/steel-trading-assistant/)** | WhatsApp CRM for a steel trading business: business-card capture, voice-dictated reminders and a morning digest in Roman Urdu | Built, waiting for the Meta production connection | none yet |
+| **[Strategy validation pipeline](./projects/trading-pipeline/)** | Crypto strategy research on Freqtrade. A candidate earns paper-trading time only by passing a nine-stage, fail-closed statistical gate: static lookahead scan, data contract, signal sanity, recursion and lookahead analysis, four-fold walk-forward, fee stress at Kraken's published maker rate, Monte Carlo drawdown, deflated Sharpe. Spot, EUR, dry-run only; live capital needs a human-typed confirmation | Research, dry-run only | [12 trials gated, 0 passed, true out-of-sample 729 days](./evals/2026-10-03-trading-gate.json), 3 Oct 2026 |
 | **[sherrybuilds.com](https://github.com/sherrybuilds-studio/sherrybuilds.com)** | Next.js portfolio. Its evidence section is generated from dated eval files like the ones here | Live | Released through CI behind a manual approval |
 
 Every linked number comes from a file in [`evals/`](./evals). Each file records its date and the command or query that produced it.
@@ -38,6 +38,7 @@ WhatsApp ──────▶│ product and restaurant assistants ──▶ Ch
 ```
 
 - Product LLM calls go through OpenRouter; fleet agents run on Claude.
+- The strategy validation pipeline runs on the same server as its own Docker Compose project, outside every path the fleet can touch; the dispatcher refuses tasks that target it.
 - The self-healer runs every 30 minutes, a predictive monitor every 10, and no-LLM probes every 5. A health report reaches Telegram at 09:00 Berlin time.
 - Details: [fleet](./architecture/fleet-overview.md) · [retrieval stack](./architecture/rag-stack.md) · [eval framework](./architecture/eval-framework.md) · [solutions mapped to modules](./SOLUTIONS.md)
 
@@ -61,15 +62,18 @@ Each of these reuses parts that already run in the systems above. **None of them
 | **No-show reducer** | Reminders 24 hours and 2 hours before an appointment with confirm and cancel replies, plus a waitlist that fills freed slots | Reminders and waitlist (reservation-agent), generalised beyond restaurants |
 | **Invoice follow-up agent** | Sends staged, polite reminders for overdue invoices and stops as soon as a payment is recorded | Follow-up stage machine (Sales OS CRM) |
 | **Inbox triage agent** | Sorts incoming e-mail into leads, support, invoices and noise, and drafts answers to common questions from the business's own FAQ | Grounded retrieval with refusals (the chat on sherrybuilds.com) |
-| **Document intake agent** | Reads business cards, delivery notes or receipts from photos into a CRM or spreadsheet, and asks when a field is unclear | Card capture with cheap-model-first escalation (steel trading assistant) |
 
 Want one of these for your business? Write to [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com).
 
-## Limits
+## Scope and limits
 
-- The restaurant assistant is not deployed, and Sales OS runs by hand.
-- The product assistant is a pilot. The 38% figure measures prompt size after the switch to retrieval, not a billing total.
-- The voice receptionist runs one demo tenant; no paying business is onboarded yet.
+Every claim above is scoped to what the evidence files cover. Where a system is further along in engineering than in deployment, this is where it says so.
+
+- **Voice receptionist:** runs as one demo tenant on Vapi, with the German and English call flows, booking tools and compliance records in place. Each new business is set up as its own tenant directory with its own prompts and booking configuration.
+- **Restaurant assistant:** built and gated in CI, not yet deployed for a restaurant. **Sales OS:** runs by hand, and nothing it prepares is sent without a human approval.
+- **Product assistant:** a pilot for one furniture brand. The 38% figure measures prompt size after the switch to retrieval, not a billing total.
+- **Strategy validation pipeline:** research in dry-run. It has never placed a real order, and no gated strategy has passed. Every number carries its data label, and backtest results are not a forecast of live performance.
+- **Fleet numbers** count hard failures of agent runs on the task queue, not product calls, and come from a SQL count whose method is stored in each snapshot.
 
 ## Public code
 

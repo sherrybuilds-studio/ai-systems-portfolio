@@ -1,0 +1,111 @@
+{
+ "date": "2026-10-03",
+ "system": "strategy validation pipeline (sherry-trading, private repository)",
+ "source": "user_data/gate/LEADERBOARD.md, generated 2026-10-03T05:16:34Z by user_data/gate/leaderboard.py from the gate registry",
+ "command": "scripts/gate_all.sh --to paper (stages S1-S9, fail-closed)",
+ "data": "[BACKTEST binance 2024-10-02..2026-10-01]: in-sample 365 days, then 4 rolling out-of-sample folds of 91 days; true out-of-sample = the full 729 days the community parameters never saw",
+ "venue": "Kraken EUR spot, dry-run only; base fee 0.004 per side (Kraken Tier 1 maker, schedule fetched 2026-10-01), post-only orders",
+ "trials_gated": 12,
+ "strategies": 8,
+ "passed": 0,
+ "died_at": "S5 walk-forward (all 8)",
+ "note": "profit, drawdown and pf are the aggregate out-of-sample run; buy-and-hold over the same out-of-sample year: equal weight -44.56%, BTC/EUR -27.21% (benchmark.py, never gated)",
+ "rows": [
+  {
+   "strategy": "C_BbandRsi",
+   "tier": "rejected",
+   "verdict": "FAIL",
+   "died_at": "S5",
+   "trades": 133,
+   "profit": -0.395802,
+   "sharpe": -1.21225,
+   "drawdown": 0.558117,
+   "pf": 0.548402,
+   "label": "[BACKTEST binance 2024-10-02..2026-09-30]"
+  },
+  {
+   "strategy": "C_AverageStrategy",
+   "tier": "rejected",
+   "verdict": "FAIL",
+   "died_at": "S5",
+   "trades": 12,
+   "profit": -0.109261,
+   "sharpe": -2.40504,
+   "drawdown": 0.110285,
+   "pf": 0.0191291,
+   "label": "[BACKTEST binance 2024-10-03..2026-10-01]"
+  },
+  {
+   "strategy": "C_hlhb",
+   "tier": "rejected",
+   "verdict": "FAIL",
+   "died_at": "S5",
+   "trades": 51,
+   "profit": -0.508659,
+   "sharpe": -2.43219,
+   "drawdown": 0.513319,
+   "pf": 0.0948081,
+   "label": "[BACKTEST binance 2024-10-02..2026-09-30]"
+  },
+  {
+   "strategy": "C_Supertrend",
+   "tier": "rejected",
+   "verdict": "FAIL",
+   "died_at": "S5",
+   "trades": 343,
+   "profit": -0.616665,
+   "sharpe": -2.62582,
+   "drawdown": 0.673582,
+   "pf": 0.500666,
+   "label": "[BACKTEST binance 2024-10-02..2026-09-30]"
+  },
+  {
+   "strategy": "C_AdxSmas",
+   "tier": "rejected",
+   "verdict": "FAIL",
+   "died_at": "S5",
+   "trades": 373,
+   "profit": -0.632539,
+   "sharpe": -3.00926,
+   "drawdown": 0.708957,
+   "pf": 0.47645,
+   "label": "[BACKTEST binance 2024-10-02..2026-09-30]"
+  },
+  {
+   "strategy": "C_AwesomeMacd",
+   "tier": "rejected",
+   "verdict": "FAIL",
+   "died_at": "S5",
+   "trades": 222,
+   "profit": -0.597779,
+   "sharpe": -3.08032,
+   "drawdown": 0.621026,
+   "pf": 0.409317,
+   "label": "[BACKTEST binance 2024-10-02..2026-09-30]"
+  },
+  {
+   "strategy": "C_ADXMomentum",
+   "tier": "rejected",
+   "verdict": "FAIL",
+   "died_at": "S5",
+   "trades": 451,
+   "profit": -0.638114,
+   "sharpe": -3.36226,
+   "drawdown": 0.653073,
+   "pf": 0.455852,
+   "label": "[BACKTEST binance 2024-10-02..2026-09-30]"
+  },
+  {
+   "strategy": "EmaRsiBase",
+   "tier": "reference",
+   "verdict": "FAIL",
+   "died_at": "S5",
+   "trades": 30,
+   "profit": -0.0220858,
+   "sharpe": -0.501574,
+   "drawdown": 0.0280731,
+   "pf": 0.714055,
+   "label": "[BACKTEST binance 2024-10-03..2026-10-01]"
+  }
+ ]
+}
