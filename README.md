@@ -65,16 +65,6 @@ Each of these reuses parts that already run in the systems above. **None of them
 
 Want one of these for your business? Write to [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com).
 
-## Scope and limits
-
-Every claim above is scoped to what the evidence files cover. Where a system is further along in engineering than in deployment, this is where it says so.
-
-- **Voice receptionist:** runs as one demo tenant on Vapi, with the German and English call flows, booking tools and compliance records in place. Each new business is set up as its own tenant directory with its own prompts and booking configuration.
-- **Restaurant assistant:** built and gated in CI, not yet deployed for a restaurant. **Sales OS:** runs by hand, and nothing it prepares is sent without a human approval.
-- **Product assistant:** a pilot for one furniture brand. The 38% figure measures prompt size after the switch to retrieval, not a billing total.
-- **Strategy validation pipeline:** research in dry-run. It has never placed a real order, and no gated strategy has passed. Every number carries its data label, and backtest results are not a forecast of live performance.
-- **Fleet numbers** count hard failures of agent runs on the task queue, not product calls, and come from a SQL count whose method is stored in each snapshot.
-
 ## Public code
 
 | Repository | What it is |
