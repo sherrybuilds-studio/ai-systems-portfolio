@@ -22,5 +22,5 @@ system is not built yet, the row says **not yet built** and names the nearest ex
 ## Shared platform underneath all of them
 
 - `packages/sherry-core`: config (`CoreSettings`), one validated LLM client with retries, semantic cache, Telegram client with backoff, graph engine.
-- Agent fleet: Postgres-leased dispatcher with 54 agents in six teams, self-healer, a lander that merges test-only and docs-only agent work after CI passes, and a cost ledger (`services/dispatcher`, `services/self-healer`). See [architecture/fleet-overview.md](./architecture/fleet-overview.md).
-- Eval gates in CI: every product has an offline gate, and a change that drops a gate below its threshold does not merge ([architecture/eval-framework.md](./architecture/eval-framework.md)).
+- Agent fleet: Postgres-leased dispatcher with 54 agents in six teams, self-healer, a lander that merges test-only and docs-only agent work after CI passes, and a cost ledger (`services/dispatcher`, `services/self-healer`). See the [fleet overview](./architecture/fleet-overview.md).
+- Eval gates in CI: every product has an offline gate, and a change that drops a gate below its threshold does not merge (see the [eval framework](./architecture/eval-framework.md)).

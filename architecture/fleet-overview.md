@@ -27,7 +27,7 @@ sherry-enqueue <agent> -m "task" --priority 2 --dedup-key <key>
           │ FOR UPDATE SKIP LOCKED
           ▼
 ┌──────────────────────────────────┐
-│  Dispatcher (PM2 process)        │
+│  Dispatcher (long-running)       │
 │  - leases the next eligible task │
 │  - spawns claude -p "<prompt>"   │
 │  - records cost and status       │
@@ -65,7 +65,7 @@ An agent runs only when a trigger gives it real work.
 
 Every 30 minutes the healer classifies failed runs (transient platform error, tool denied, timeout,
 real bug), applies a policy (requeue with cooldown, skip stale periodic work, escalate), and remediates
-from an allowlisted registry: restart a container or bounce a PM2 process, never the dispatcher itself.
+from an allowlisted registry: restart a container or a service, never the dispatcher itself.
 A daily cap of 12 side-effect remediations is the kill switch; past it, the healer only escalates to
 Telegram. A predictive monitor runs every 10 minutes, no-LLM probes every 5, and a health report
 reaches Telegram every morning at 09:00.

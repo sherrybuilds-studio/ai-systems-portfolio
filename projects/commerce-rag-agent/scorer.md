@@ -9,7 +9,7 @@ The lead-generation pipeline reads public property portals for high-end real-est
 | Property price | 40 | Budget proxy — the strongest predictor of furniture spend |
 | Location prestige | 40 | Premium areas correlate with luxury-brand fit |
 | Listing freshness | 20 | New buyers furnish soon after purchase; stale listings go cold |
-| Property type | 10 | Houses/villas need far more furniture than apartments |
+| Property type | 10 | Houses and villas need far more furniture than apartments |
 
 Maximum total: 110 (price and location dominate by design — a fresh cheap flat should never outrank a week-old villa).
 

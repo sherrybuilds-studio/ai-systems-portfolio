@@ -58,7 +58,7 @@ Green dashboards lie: a call can "complete" while the assistant invents a listin
 
 ## Stack
 
-Vapi · Deepgram (speech-to-text) · ElevenLabs (text-to-speech) · Claude · Python / FastAPI · Supabase (Postgres) · Telegram Bot API · GitHub Actions
+Vapi · Deepgram (speech-to-text) · Cartesia Sonic 3.5 (text-to-speech, ElevenLabs as automatic fallback) · Claude · Python · FastAPI · Supabase (Postgres) · Telegram Bot API · GitHub Actions
 
 ## Status and limits
 

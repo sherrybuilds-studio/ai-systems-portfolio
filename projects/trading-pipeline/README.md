@@ -32,7 +32,7 @@ S5 reports two windows: the out-of-sample folds, and the **true out-of-sample** 
 
 ## Fee realism
 
-Kraken's published Tier 1 schedule (fetched 1 Oct 2026) is 0.40% maker / 0.80% taker. The pipeline sets the base fee explicitly at 0.004 per side and places post-only orders, because ccxt's built-in Kraken default (0.16 / 0.26%) would have made every backtest look better than the exchange ever pays. S6 then fails closed twice over: the recorded fees must equal what the bot settings declare, and they must reproduce every recorded profit with Freqtrade's own spot arithmetic.
+Kraken's published Tier 1 schedule (fetched 1 Oct 2026) is 0.40% for maker orders and 0.80% for taker orders. The pipeline sets the base fee explicitly at 0.004 per side and places post-only orders, because ccxt's built-in Kraken default (0.16% and 0.26%) would have made every backtest look better than the exchange ever pays. S6 then fails closed twice over: the recorded fees must equal what the bot settings declare, and they must reproduce every recorded profit with Freqtrade's own spot arithmetic.
 
 ## Result so far, 3 Oct 2026
 
@@ -40,17 +40,17 @@ Kraken's published Tier 1 schedule (fetched 1 Oct 2026) is 0.40% maker / 0.80% t
 
 - 12 strategy versions gated (N = 12 for the deflated-Sharpe bar), 8 distinct strategies, **0 passed**. All eight failed at S5.
 - Best true out-of-sample profit factor over 729 days: 1.15 (C_AverageStrategy, 12 trades); the reference strategy EmaRsiBase: 0.34.
-- Buy-and-hold over the same out-of-sample year, never gated and never ranked: equal weight −44.56%, BTC/EUR −27.21%.
+- Buy-and-hold over the same out-of-sample year, never gated and never ranked: equal weight −44.56%, bitcoin in euros −27.21%.
 
 Reading: the out-of-sample year was a bear year, every long-only strategy lost, and over the full span nothing shows an edge at real maker fees. The gate produced that answer instead of a flattering one.
 
 ## Data
 
 - Binance history from July 2024 for backtests (5m, 1h, 4h and 1d candles, six EUR pairs), Kraken trade-derived candles from June 2026 for the live venue.
-- A data-quality check compares the venues: daily-return correlation between 0.994 (BTC) and 0.998 (ADA). The one known gap (LINK/EUR, one candle) is recorded, and a live gap rule blocks new entries rather than filling it.
+- A data-quality check compares the venues: daily-return correlation between 0.994 (BTC) and 0.998 (ADA). The one known gap (the LINK euro pair, one candle) is recorded, and a live gap rule blocks new entries rather than filling it.
 
 ## Operations
 
-- Docker Compose on the same server as the other systems, pinned image, credential-free healthcheck, log rotation. A read-only charts container renders the gate's JSON views.
+- Deployed with Docker Compose: pinned image, credential-free health check, log rotation. A read-only charts container renders the gate's JSON views.
 - Offline tests run in CI on every push (actions pinned by SHA), next to the repository guard and a linter.
 - Next milestones: dry-run challengers with a drift monitor that compares paper trades with their backtest, then the S9 champion rule.

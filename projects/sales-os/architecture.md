@@ -93,7 +93,7 @@ Phase 3 — Live Call Copilot
 
 ### Phase 3 — Live Call Copilot
 
-- **ASR client.** Streams call audio to Deepgram Nova-3 over WebSocket in multilingual mode, handling German/English code-switching in real time.
+- **ASR client.** Streams call audio to Deepgram Nova-3 over WebSocket in multilingual mode, handling German and English code-switching in real time.
 - **Session manager.** Keeps call state in memory and journals every mutation to a per-call file on disk, so a crash mid-call loses nothing. Post-call, it produces a bilingual GLM-5.2 summary and writes the call record and a note to the CRM.
 - **Suggestion engine.** Retrieves relevant playbook snippets (sales playbook, objection handling, pricing FAQ collections in ChromaDB) and asks GLM-5.2 for at most 2 nudges above a 0.6 confidence floor. Results are semantically cached and passes are throttled; on any failure it returns an empty list rather than raising — a silent copilot beats a crashing one.
 - **Delivery layer.** A FastAPI app that fans suggestions out to Telegram, a live SSE browser overlay (dark UI showing transcript + nudges), and optionally the WhatsApp thread.

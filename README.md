@@ -2,9 +2,9 @@
 
 **Shehryar Irfan** · Berlin · [sherrybuilds.com](https://sherrybuilds.com) · [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com) · [LinkedIn](https://www.linkedin.com/in/shehryar-irfan-bb5469349)
 
-I build LLM systems for small businesses and run them in production on one Linux server: an AI phone receptionist, a self-healing fleet of 54 Claude Code agents, a job-search pipeline, retrieval assistants on WhatsApp, and a fail-closed validation pipeline for trading strategies.
+I design, build and operate production LLM systems for small businesses. The portfolio covers an AI phone receptionist, a self-healing fleet of 54 Claude Code agents, a job-search pipeline, retrieval assistants on WhatsApp and a fail-closed validation pipeline for trading strategies.
 
-This repository holds the architecture notes and the dated eval files behind every number I publish. The product code lives in a private monorepo; the public code is listed under [Public code](#public-code).
+This repository holds the architecture notes and the dated evaluation files behind every number I publish. The product code is kept in a private monorepo, and the public code is listed under [Public code](#public-code).
 
 ---
 
@@ -18,7 +18,7 @@ This repository holds the architecture notes and the dated eval files behind eve
 | **[Sales OS](./projects/sales-os/)** | Finds owner-run local businesses on Google Places, scores how many calls each one is likely to miss, and prepares outreach only where consent exists (UWG §7). Nothing sends without human approval | Built, run by hand | [Scorer 10 of 10](./evals/2026-09-02-sales-os-eval.json) · [phase gates](./evals/2026-09-04-sales-os-phase-gates.json) |
 | **[WhatsApp product assistant](./projects/commerce-rag-agent/)** · [code](https://github.com/sherrybuilds-studio/commerce-rag-agent) | Answers product questions for a furniture brand from its own catalogue: keyword match first, vector search second, semantic cache at 0.95 cosine | Pilot | Prompt cut 38% (1,118 to 695 tokens per message) when retrieval replaced the full catalogue, [changelog, 27 Apr 2026](https://github.com/sherrybuilds-studio/commerce-rag-agent/blob/main/CHANGELOG.md) |
 | **[Restaurant reservation assistant](./projects/restaurant-bot/)** · [code](https://github.com/sherrybuilds-studio/reservation-agent) | Reservations, waitlist, reminders and menu answers over WhatsApp | Built, not deployed | [Retrieval 10 of 10](./evals/2026-09-02-restaurant-bot-eval.json), 2 Sep 2026 · public repo [10 of 10](https://github.com/sherrybuilds-studio/reservation-agent/blob/main/evals/2026-10-01-retrieval-eval.json), 1 Oct 2026, re-run by CI |
-| **[Strategy validation pipeline](./projects/trading-pipeline/)** | Crypto strategy research on Freqtrade. A candidate earns paper-trading time only by passing a nine-stage, fail-closed statistical gate: static lookahead scan, data contract, signal sanity, recursion and lookahead analysis, four-fold walk-forward, fee stress at Kraken's published maker rate, Monte Carlo drawdown, deflated Sharpe. Spot, EUR, dry-run only; live capital needs a human-typed confirmation | Research, dry-run only | [12 trials gated, 0 passed, true out-of-sample 729 days](./evals/2026-10-03-trading-gate.json), 3 Oct 2026 |
+| **[Strategy validation pipeline](./projects/trading-pipeline/)** | Crypto strategy research on Freqtrade. A candidate earns paper-trading time only by passing a nine-stage, fail-closed statistical gate: static lookahead scan, data contract, signal sanity, recursion and lookahead analysis, four-fold walk-forward, fee stress at Kraken's published maker rate, Monte Carlo drawdown and deflated Sharpe. Spot trading in euros, dry run only. Live capital requires a confirmation typed by a person | Research, dry-run only | [12 trials gated, 0 passed, true out-of-sample 729 days](./evals/2026-10-03-trading-gate.json), 3 Oct 2026 |
 | **[sherrybuilds.com](https://github.com/sherrybuilds-studio/sherrybuilds.com)** | Next.js portfolio. Its evidence section is generated from dated eval files like the ones here | Live | Released through CI behind a manual approval |
 
 Every linked number comes from a file in [`evals/`](./evals). Each file records its date and the command or query that produced it.
@@ -26,28 +26,28 @@ Every linked number comes from a file in [`evals/`](./evals). Each file records 
 ## Architecture
 
 ```text
-                ┌────────────────── one Ubuntu VPS (Docker + PM2) ───────────────────┐
+                ┌──────────────────────── production platform ───────────────────────┐
 phone ── Vapi ─▶│ voice receptionist (FastAPI tool webhook) ──▶ Supabase             │
 WhatsApp ──────▶│ product and restaurant assistants ──▶ ChromaDB + MiniLM embeddings │
-                │ job pipeline (daily cron) ──▶ Telegram digest                      │
+                │ job pipeline (daily schedule) ──▶ Telegram digest                  │
                 │                                                                    │
                 │ dispatcher ──leases──▶ agent_tasks (Postgres) ◀── self-healer      │
                 │   ├─ spawns headless Claude Code agents with allowlisted tools     │
                 │   └─ agent work ──▶ side branch ──▶ lander (tests and docs only)   │
-                └─────────── public traffic only through a Cloudflare tunnel ────────┘
+                └────────────────────────────────────────────────────────────────────┘
 ```
 
-- Product LLM calls go through OpenRouter; fleet agents run on Claude.
-- The strategy validation pipeline runs on the same server as its own Docker Compose project, outside every path the fleet can touch; the dispatcher refuses tasks that target it.
-- The self-healer runs every 30 minutes, a predictive monitor every 10, and no-LLM probes every 5. A health report reaches Telegram at 09:00 Berlin time.
+- Product LLM calls go through OpenRouter, and the fleet agents run on Claude.
+- The strategy validation pipeline is isolated from the agent fleet. The dispatcher refuses any task that targets it.
+- The self-healer runs every 30 minutes, a predictive monitor every 10 and rule-based health probes every 5. A health report is sent to Telegram at 09:00 Berlin time.
 - Details: [fleet](./architecture/fleet-overview.md) · [retrieval stack](./architecture/rag-stack.md) · [eval framework](./architecture/eval-framework.md) · [solutions mapped to modules](./SOLUTIONS.md)
 
 ## How the evals work
 
-- Every product has an offline, deterministic gate over a fixed set of golden cases. No live model calls, no secrets.
+- Every product has an offline, deterministic gate over a fixed set of golden cases, with no live model calls and no secrets.
 - The voice, restaurant and portfolio-chat gates run in CI on every push to the monorepo, next to the unit tests of the voice, Sales OS and job apps. A gate below its threshold fails the build.
 - A fleet agent (`eval-runner`) re-runs the gates nightly and flags regressions.
-- Fleet numbers come from a SQL count over the task table; the method is stored inside each snapshot.
+- Fleet numbers come from a SQL count over the task table, and the method is stored inside each snapshot.
 
 ## What I can build next
 
@@ -63,7 +63,7 @@ Each of these reuses parts that already run in the systems above. **None of them
 | **Invoice follow-up agent** | Sends staged, polite reminders for overdue invoices and stops as soon as a payment is recorded | Follow-up stage machine (Sales OS CRM) |
 | **Inbox triage agent** | Sorts incoming e-mail into leads, support, invoices and noise, and drafts answers to common questions from the business's own FAQ | Grounded retrieval with refusals (the chat on sherrybuilds.com) |
 
-Want one of these for your business? Write to [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com).
+To discuss one of these for your business, contact [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com).
 
 ## Public code
 
