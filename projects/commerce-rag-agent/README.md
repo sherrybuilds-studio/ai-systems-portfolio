@@ -1,11 +1,11 @@
 # Commerce RAG Agent — WhatsApp Product Assistant
 
-An AI sales assistant for a furniture brand, running over WhatsApp. It answers product questions from the
+An AI sales assistant for a furniture brand, built for WhatsApp. It answers product questions from the
 brand's own catalogue (prices, wood types, finishes, lead times) in a respectful brand voice, and a
 separate pipeline finds and scores likely buyers. Grounding is strict: the assistant quotes only prices
 that exist in the catalogue.
 
-> **Status (2026-09-28):** pilot. The pilot converses in Urdu and English; the public version,
+> **Status (2026-10-15):** pilot, paused since 2026-10-10. The pilot conversed in Urdu and English; the public version,
 > [commerce-rag-agent](https://github.com/sherrybuilds-studio/commerce-rag-agent), answers in English and
 > German.
 
@@ -28,7 +28,7 @@ comes from retrieval, not from the cache, and it measures prompt size, not a bil
 | LLM | Claude 3.5 Haiku through OpenRouter |
 | Chunking | LangChain `RecursiveCharacterTextSplitter` (512 characters, 100 overlap) |
 | Leads | Supabase, plus a shared sheet for outreach |
-| Automation | n8n (scheduled lead runs, error alerts) |
+| Automation | n8n (scheduled lead runs, error alerts; parked) |
 | CI | ruff, gitleaks, catalogue validation and an offline retrieval gate on every push |
 
 ## Architecture

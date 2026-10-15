@@ -4,7 +4,7 @@ A job-search pipeline that finds roles fitting a candidate profile and prepares 
 apply: a one-page CV tailored to the posting and a cover letter that an independent reviewer has checked.
 Nothing is sent automatically; a person sends every application.
 
-> **Status (2026-09-28):** runs daily at 08:00 UTC, 308 to 383 postings per run over 23 to 26 September,
+> **Status (2026-10-15):** runs daily via the fleet. 308 to 383 postings per run over 23 to 26 September,
 > plus an on-demand sourcing pass over **83 company career boards** (2,981 postings on 26 September).
 > [Evidence](../../evals/2026-09-26-job-pipeline.json). Public code:
 > [job-pipeline](https://github.com/sherrybuilds-studio/job-pipeline), with a fictional example profile.
@@ -26,7 +26,7 @@ review, at most one revision, and a final honesty gate. A kit is cleared only at
 ## Architecture
 
 ```text
-DAILY RUN (cron, 08:00 UTC)
+DAILY RUN (via the fleet)
   job boards ──▶ hard requirements ──▶ rule-based score (no LLM)
                                            │
                ┌───────────────────────────┼──────────────────────────┐
@@ -51,7 +51,7 @@ KIT (per READY role, never sends)
 ### Rule-based scoring instead of a model
 
 Matching uses deterministic weighted scoring against the profile, with no model call per posting. Hundreds
-of postings are ranked every day at no model cost, and every score can be explained. The model is
+of postings are ranked per run at no model cost, and every score can be explained. The model is
 reserved for the one job where it earns its cost: writing.
 
 ### Hard requirements before scoring

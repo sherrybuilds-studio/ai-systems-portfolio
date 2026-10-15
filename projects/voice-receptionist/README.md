@@ -1,7 +1,7 @@
 # AI Phone Receptionist
 
-A phone agent that answers a small business's calls in German or English, qualifies the caller, books through the business's own systems, and hands the owner a complete record of every call.
-It says it is an AI in its first sentence, gives a recording notice when a call is recorded, and writes tamper-evident evidence of both for every call.
+A phone agent that answers a small business's calls in German or English, qualifies the caller, books through the business's own systems, and hands the owner a complete record of each call it answers.
+It says it is an AI in its first sentence, gives a recording notice when a call is recorded, and writes tamper-evident evidence of both for each call it answers.
 Deployed on Vapi with a demo tenant (a Berlin estate agency). **Demo on request** via [sherrybuilds.com](https://sherrybuilds.com).
 
 > The source code is private: the product is available for licensing. This page describes the design and links the dated evidence. It contains no prompts, configuration or code.
@@ -48,7 +48,7 @@ Owner-run businesses lose bookings to phones nobody answers. An AI receptionist 
 
 Green dashboards lie: a call can "complete" while the assistant invents a listing or skips the legal disclosure. So each call is graded on what it **did**:
 
-- A **deterministic outcome rubric** checks every call on eight points: AI disclosure, recording notice where required, phone numbers read back digit by digit, details confirmed back to the caller, no invented facts, no leaked instructions, staying in its role, and no action the caller did not ask for. It uses no model and no network.
+- A **deterministic outcome rubric** checks each call on eight points: AI disclosure, recording notice where required, phone numbers read back digit by digit, details confirmed back to the caller, no invented facts, no leaked instructions, staying in its role, and no action the caller did not ask for. It uses no model and no network.
 - **Golden calls**: a fixed set of transcripts, including ones with known defects, must be judged correctly.
 - The gate runs in **CI on every push**, and a fleet agent grades the day's real calls on top of it.
 
@@ -62,8 +62,8 @@ Vapi · Deepgram (speech-to-text) · Cartesia Sonic 3.5 (text-to-speech, ElevenL
 
 ## Status and limits
 
-- **Live** on Vapi for one demo tenant. Demo calls on request, since the public demo number was taken off the site on 2026-09-10.
-- Tenant templates exist for an estate agency, a dental practice, a salon and a restaurant. Only the estate-agency demo is live, and no paying business has been onboarded yet.
+- **Deployed** on Vapi for one demo tenant. Demo calls on request, since the public demo number was taken off the site on 2026-09-10.
+- Tenant templates exist for an estate agency, a dental practice, a salon and a restaurant. Only the estate-agency demo is deployed, and no paying business has been onboarded yet.
 - Missed-call text-back and Google review replies are not built.
 
 Contact: [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com) · [sherrybuilds.com](https://sherrybuilds.com)

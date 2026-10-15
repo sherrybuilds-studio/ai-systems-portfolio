@@ -2,12 +2,12 @@
 
 ## Overview
 
-A single-server fleet of **54 agents** in six teams ([catalog snapshot](../evals/2026-09-26-fleet-agents.json)).
+An autonomous agent fleet on a single server, organised in six teams.
 A Postgres-backed dispatcher leases tasks from a queue and runs each agent as a headless Claude Code
 process with an explicit tool allowlist.
 
-Verified numbers (database snapshot, 2026-09-24): **2.4% hard failures over the 1,000 runs from
-9 July to 24 September** (803 done, 173 skipped, 24 failed; [snapshot](../evals/2026-09-24-fleet-stats.json)).
+Verified numbers (database snapshot, 2026-09-24): **2.4% hard failures in 1,000 fleet runs, July to
+September 2026** (9 July to 24 September; 803 done, 173 skipped, 24 failed; [snapshot](../evals/2026-09-24-fleet-stats.json)).
 Before the self-healer shipped on 2026-08-22, 43% of all runs (471 of 1,088) were failed or stale;
 that backlog drained to zero the same day.
 
@@ -43,12 +43,12 @@ Agent output → Telegram digest, CRM, or a branch for the lander
 
 | Team | Agents |
 | --- | --- |
-| Infrastructure and security (14) | sentinel-prime · security-auditor · incident-responder · backup-verifier · disk-ram-warden · cert-dns-checker · dependency-bumper · log-summarizer · secret-scanner · secret-guard · fleet-janitor · deploy-monitor · stripe-billing-guard · cost-warden |
-| Code quality (9) | code-reviewer · test-engineer · eval-runner · refactor-surgeon · bug-triager · perf-profiler · docs-keeper · merge-captain · migration-foreman |
-| Product delivery (9) | commerce-keeper · restaurant-keeper · jobhunt-keeper · rag-curator · prompt-tuner · conversation-qa · whatsapp-launcher · interior-bot-builder · demo-builder |
-| Growth and sales (8) | lead-qualifier · outreach-drafter · proposal-writer · pipeline-analyst · competitor-watcher · market-scanner · testimonial-collector · pricing-strategist |
-| Research and learning (7) | morning-researcher · claude-tracker · fact-checker · paper-digester · tool-scout · uni-assistant · idea-curator |
-| Content and brand (7) | content-strategist · linkedin-ghostwriter · case-study-writer · portfolio-keeper · video-script-writer · brand-voice-guard · weekly-narrator |
+| Infrastructure and security | sentinel-prime · security-auditor · incident-responder · backup-verifier · disk-ram-warden · cert-dns-checker · dependency-bumper · log-summarizer · secret-scanner · secret-guard · fleet-janitor · deploy-monitor · stripe-billing-guard · cost-warden |
+| Code quality | code-reviewer · test-engineer · eval-runner · refactor-surgeon · bug-triager · perf-profiler · docs-keeper · merge-captain · migration-foreman |
+| Product delivery | commerce-keeper · restaurant-keeper · jobhunt-keeper · rag-curator · prompt-tuner · conversation-qa · whatsapp-launcher · interior-bot-builder · demo-builder |
+| Growth and sales | lead-qualifier · outreach-drafter · proposal-writer · pipeline-analyst · competitor-watcher · market-scanner · testimonial-collector · pricing-strategist |
+| Research and learning | morning-researcher · claude-tracker · fact-checker · paper-digester · tool-scout · uni-assistant · idea-curator |
+| Content and brand | content-strategist · linkedin-ghostwriter · case-study-writer · portfolio-keeper · video-script-writer · brand-voice-guard · weekly-narrator |
 
 Each agent is one catalog entry: role, tool allowlist, trigger, model tier, turn limit and budget.
 An agent runs only when a trigger gives it real work.
