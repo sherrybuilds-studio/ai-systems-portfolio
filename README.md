@@ -2,7 +2,7 @@
 
 **Shehryar Irfan** · Berlin · [sherrybuilds.com](https://sherrybuilds.com) · [sherry.aiops@gmail.com](mailto:sherry.aiops@gmail.com) · [LinkedIn](https://www.linkedin.com/in/shehryar-irfan-bb5469349)
 
-I design, build and operate production LLM systems for small businesses. The portfolio covers an AI phone receptionist, a self-healing fleet of 54 Claude Code agents, a job-search pipeline, retrieval assistants on WhatsApp and a fail-closed validation pipeline for trading strategies.
+I design, build and operate LLM systems for small businesses. The portfolio covers an AI phone receptionist, an autonomous agent fleet with a self-healer, a job-search pipeline, retrieval assistants on WhatsApp and a fail-closed validation pipeline for trading strategies.
 
 This repository holds the architecture notes and the dated evaluation files behind every number I publish. The product code is kept in a private monorepo, and the public code is listed under [Public code](#public-code).
 
@@ -12,11 +12,11 @@ This repository holds the architecture notes and the dated evaluation files behi
 
 | System | What it does | Status | Evidence |
 | --- | --- | --- | --- |
-| **[AI phone receptionist](./projects/voice-receptionist/)** | Answers calls in German and English, checks availability and books through a FastAPI tool webhook. Says it is an AI (EU AI Act Art. 50) and gives the recording notice (§201 StGB) at the start of every call, then writes a hash-chained evidence record | Deployed on Vapi, demo on request | [12 of 12 golden calls](./evals/2026-09-02-voice-receptionist-eval.json), 2 Sep 2026 |
-| **[Agent fleet and self-healer](./architecture/fleet-overview.md)** | 54 Claude Code agents in six teams lease work from a Postgres queue. A self-healer sorts every failed run into a failure class and requeues, skips or escalates it. A lander merges test-only and docs-only agent work once every CI check is green | Running | [2.4% hard failures over 1,000 runs, 9 Jul to 24 Sep](./evals/2026-09-24-fleet-stats.json) · [54 agents defined](./evals/2026-09-26-fleet-agents.json) |
-| **[Job pipeline](./projects/cv-job-hunter/)** · [code](https://github.com/sherrybuilds-studio/job-pipeline) | Scores fresh postings every morning and sends a Telegram digest. An on-demand pass pulls company career boards, drops roles that fail hard requirements, checks the posting is still open, then writes a one-page CV and a cover letter that an independent reviewer must clear at zero unsupported claims | Daily at 08:00 UTC | [83 career boards, 2,981 postings in one pass](./evals/2026-09-26-job-pipeline.json), 26 Sep 2026 |
+| **[AI phone receptionist](./projects/voice-receptionist/)** | Answers calls in German and English, checks availability and books through a FastAPI tool webhook. Says it is an AI (EU AI Act Art. 50) and gives the recording notice (§201 StGB) at the start of each call it answers, then writes a hash-chained evidence record | Deployed on Vapi, demo on request | [12 of 12 golden calls](./evals/2026-09-02-voice-receptionist-eval.json), 2 Sep 2026 |
+| **[Agent fleet and self-healer](./architecture/fleet-overview.md)** | An autonomous agent fleet of headless Claude Code agents, in six teams, leases work from a Postgres queue. A self-healer sorts every failed run into a failure class and requeues, skips or escalates it. A lander merges test-only and docs-only agent work once every CI check is green | Running | [2.4% hard failures in 1,000 fleet runs, July to September 2026](./evals/2026-09-24-fleet-stats.json) |
+| **[Job pipeline](./projects/cv-job-hunter/)** · [code](https://github.com/sherrybuilds-studio/job-pipeline) | Built to score fresh postings each morning and send a Telegram digest. An on-demand pass pulls company career boards, drops roles that fail hard requirements, checks the posting is still open, then writes a one-page CV and a cover letter that an independent reviewer must clear at zero unsupported claims | Parked | [83 career boards, 2,981 postings in one pass](./evals/2026-09-26-job-pipeline.json), 26 Sep 2026 |
 | **[Sales OS](./projects/sales-os/)** | Finds owner-run local businesses on Google Places, scores how many calls each one is likely to miss, and prepares outreach only where consent exists (UWG §7). Nothing sends without human approval | Built, run by hand | [Scorer 10 of 10](./evals/2026-09-02-sales-os-eval.json) · [phase gates](./evals/2026-09-04-sales-os-phase-gates.json) |
-| **[WhatsApp product assistant](./projects/commerce-rag-agent/)** · [code](https://github.com/sherrybuilds-studio/commerce-rag-agent) | Answers product questions for a furniture brand from its own catalogue: keyword match first, vector search second, semantic cache at 0.95 cosine | Pilot | Prompt cut 38% (1,118 to 695 tokens per message) when retrieval replaced the full catalogue, [changelog, 27 Apr 2026](https://github.com/sherrybuilds-studio/commerce-rag-agent/blob/main/CHANGELOG.md) |
+| **[WhatsApp product assistant](./projects/commerce-rag-agent/)** · [code](https://github.com/sherrybuilds-studio/commerce-rag-agent) | Answers product questions for a furniture brand from its own catalogue: keyword match first, vector search second, semantic cache at 0.95 cosine | Pilot, paused since 10 Oct 2026 | Prompt cut 38% (1,118 to 695 tokens per message) when retrieval replaced the full catalogue, [changelog, 27 Apr 2026](https://github.com/sherrybuilds-studio/commerce-rag-agent/blob/main/CHANGELOG.md) |
 | **[Restaurant reservation assistant](./projects/restaurant-bot/)** · [code](https://github.com/sherrybuilds-studio/reservation-agent) | Reservations, waitlist, reminders and menu answers over WhatsApp | Built, not deployed | [Retrieval 10 of 10](./evals/2026-09-02-restaurant-bot-eval.json), 2 Sep 2026 · public repo [10 of 10](https://github.com/sherrybuilds-studio/reservation-agent/blob/main/evals/2026-10-01-retrieval-eval.json), 1 Oct 2026, re-run by CI |
 | **[Strategy validation pipeline](./projects/trading-pipeline/)** | Crypto strategy research on Freqtrade. A candidate earns paper-trading time only by passing a nine-stage, fail-closed statistical gate: static lookahead scan, data contract, signal sanity, recursion and lookahead analysis, four-fold walk-forward, fee stress at Kraken's published maker rate, Monte Carlo drawdown and deflated Sharpe. Spot trading in euros, dry run only. Live capital requires a confirmation typed by a person | Research, dry-run only | [12 trials gated, 0 passed, true out-of-sample 729 days](./evals/2026-10-03-trading-gate.json), 3 Oct 2026 |
 | **[sherrybuilds.com](https://github.com/sherrybuilds-studio/sherrybuilds.com)** | Next.js portfolio. Its evidence section is generated from dated eval files like the ones here | Live | Released through CI behind a manual approval |
@@ -26,7 +26,7 @@ Every linked number comes from a file in [`evals/`](./evals). Each file records 
 ## Architecture
 
 ```text
-                ┌──────────────────────── production platform ───────────────────────┐
+                ┌──────────────────────── single-server stack ───────────────────────┐
 phone ── Vapi ─▶│ voice receptionist (FastAPI tool webhook) ──▶ Supabase             │
 WhatsApp ──────▶│ product and restaurant assistants ──▶ ChromaDB + MiniLM embeddings │
                 │ job pipeline (daily schedule) ──▶ Telegram digest                  │
@@ -51,7 +51,7 @@ WhatsApp ──────▶│ product and restaurant assistants ──▶ Ch
 
 ## What I can build next
 
-Each of these reuses parts that already run in the systems above. **None of them is built yet.**
+Each of these reuses parts that already exist in the systems above. **None of them is built yet.**
 
 | Agent | What it would do | Built from |
 | --- | --- | --- |
