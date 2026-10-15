@@ -7,7 +7,6 @@
   "failed": 24,
   "qa_fail": 0,
   "hard_failure_pct": 2.4,
-  "active_agents": 13,
-  "method": "psql over agent_tasks on sherryos-postgres (127.0.0.1:5433), statuses counted where created_at >= since; runs = done + skipped + failed (queued rows excluded); active_agents = distinct agent values in the window; hard_failure_pct = failed/runs",
+  "method": "psql over agent_tasks on sherryos-postgres (127.0.0.1:5433), statuses counted where created_at >= since; runs = done + skipped + failed (queued rows excluded); hard_failure_pct = failed/runs",
   "correction": "2026-09-26: runs was published as 1002, a count(*) that included two queued rows; the method sums the three terminal statuses to 1000. 24/1000 = 2.4% is unchanged."
 }

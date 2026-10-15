@@ -1,9 +1,6 @@
 {
   "date": "2026-09-26",
   "since": "2026-07-09",
-  "distinct_agents_run": 31,
-  "enabled": 36,
-  "defined": 54,
   "enabled_list": [
     "backup-verifier",
     "brand-voice-guard",
@@ -42,6 +39,6 @@
     "uni-assistant",
     "weekly-narrator"
   ],
-  "method": "count(DISTINCT agent) from agent_tasks where created_at >= since; enabled/defined from agents/catalog.yaml",
+  "method": "enabled_list = the enabled entries in agents/catalog.yaml, the catalog of an autonomous agent fleet",
   "note": "The citable run numbers stay the 2026-09-24 snapshot (1,000 runs, 2.4% hard failures). From 2026-09-24 the self-healer reclassifies stale failed rows as skipped, so failed counts after that date are not comparable with the snapshot and must not be cited as an improvement."
 }
