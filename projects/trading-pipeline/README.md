@@ -4,7 +4,7 @@ A research pipeline for crypto trading strategies, built on Freqtrade 2026.8. It
 
 ## Rules the system enforces on itself
 
-- **Spot, EUR, long-only, dry-run.** No leverage, shorting, DCA or martingale. The gate never places an order and never changes what a bot runs. Going live is a separate interactive script that a human runs and confirms by typing "yes".
+- **Spot, EUR, long-only, dry-run.** No leverage, shorting, DCA or martingale. The gate never places an order and never changes what a bot runs.
 - **Fail closed.** Any error, missing file or unparseable result is a FAIL with the reason recorded. Freqtrade exits 0 on some config errors, so the gate trusts result files, never exit codes.
 - **Every number carries its data label**: `[BACKTEST <venue> <range>]`, `[PAPER <range>]` or `[SYNTHETIC]`. A repository guard runs before every commit, push and CI build; it rejects secret-shaped strings and a known fabricated accuracy figure.
 - **Thresholds are never loosened to pass a strategy.** A change needs its reason in the decision registry and the owner's approval first. 17 such decisions are recorded to date.
@@ -39,10 +39,8 @@ Kraken's published Tier 1 schedule (fetched 1 Oct 2026) is 0.40% for maker order
 `[BACKTEST binance 2024-10-02..2026-10-01]`, in-sample 365 days, four out-of-sample folds of 91 days.
 
 - 12 strategy versions gated (N = 12 for the deflated-Sharpe bar), 8 distinct strategies, **0 passed**. All eight failed at S5.
-- Best true out-of-sample profit factor over 729 days: 1.15 (C_AverageStrategy, 12 trades); the reference strategy EmaRsiBase: 0.34.
-- Buy-and-hold over the same out-of-sample year, never gated and never ranked: equal weight −44.56%, bitcoin in euros −27.21%.
 
-Reading: the out-of-sample year was a bear year, every long-only strategy lost, and over the full span nothing shows an edge at real maker fees. The gate produced that answer instead of a flattering one.
+The gate produced that answer instead of a flattering one.
 
 ## Data
 
