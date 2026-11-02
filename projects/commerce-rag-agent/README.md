@@ -5,15 +5,14 @@ brand's own catalogue (prices, wood types, finishes, lead times) in a respectful
 separate pipeline finds and scores likely buyers. Grounding is strict: the assistant quotes only prices
 that exist in the catalogue.
 
-> **Status (2026-10-15):** pilot, paused since 2026-10-10. The pilot conversed in Urdu and English; the public version,
-> [commerce-rag-agent](https://github.com/sherrybuilds-studio/commerce-rag-agent), answers in English and
-> German.
+> **Status (2026-10-15):** pilot, paused since 2026-10-10. The pilot conversed in Urdu and English; a second version answers in English and German.
+> Its code is private since 2026-11-02.
 
 ## Result
 
 Sending only the retrieved products to the model, instead of the whole catalogue in every prompt, cut the
 prompt from **1,118 to 695 tokens per message (38%)**, measured on 2026-04-27
-([changelog](https://github.com/sherrybuilds-studio/commerce-rag-agent/blob/main/CHANGELOG.md)). The saving
+(recorded in the project's changelog, which is private). The saving
 comes from retrieval, not from the cache, and it measures prompt size, not a billing total.
 
 ## Tech stack
