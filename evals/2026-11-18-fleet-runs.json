@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-18",
+  "since": "2026-06-10",
+  "runs": 6598,
+  "tasks": 6438,
+  "method": "a read-only count over the fleet's Postgres task queue on 2026-11-18: tasks = queued work items created since the first one on 2026-06-10; runs = attempts, a task retried counts once per attempt",
+  "note": "No failure rate is given: the queue stores no reason for a failure, so a hard-failure rate cannot be derived from it. No agent count is given on public text."
+}

@@ -4,14 +4,14 @@ A job-search pipeline that finds roles fitting a candidate profile and prepares 
 apply: a one-page CV tailored to the posting and a cover letter that an independent reviewer has checked.
 Nothing is sent automatically; a person sends every application.
 
-> **Status (2026-10-15):** runs daily via the fleet. 308 to 383 postings per run over 23 to 26 September,
-> plus an on-demand sourcing pass over **83 company career boards** (2,981 postings on 26 September).
+> **Status (2026-11-18):** built, run on demand; the daily schedule stopped on 13 Nov 2026. When it ran daily it
+> scraped 308 to 383 postings per run over 23 to 26 September, plus an on-demand sourcing pass over **83 company career boards** (2,981 postings on 26 September).
 > [Evidence](../../evals/2026-09-26-job-pipeline.json). Public code:
 > [job-pipeline](https://github.com/sherrybuilds-studio/job-pipeline), with a fictional example profile.
 
 ## Two passes and a kit builder
 
-**Daily run.** Scrapes job boards, drops roles that fail a hard requirement, scores the rest with rules
+**Scoring run, on demand (daily until 13 Nov 2026).** Scrapes job boards, drops roles that fail a hard requirement, scores the rest with rules
 (no model call), prepares a tailored CV for each strong match and sends a Telegram digest. A small graph decides between
 researching, widening the search and reporting "no jobs today".
 
@@ -26,7 +26,7 @@ review, at most one revision, and a final honesty gate. A kit is cleared only at
 ## Architecture
 
 ```text
-DAILY RUN (via the fleet)
+SCORING RUN (on demand; daily until 13 Nov 2026)
   job boards ──▶ hard requirements ──▶ rule-based score (no LLM)
                                            │
                ┌───────────────────────────┼──────────────────────────┐
