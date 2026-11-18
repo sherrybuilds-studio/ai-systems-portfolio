@@ -2,7 +2,7 @@
 
 ## Overview
 
-An autonomous agent fleet on a single server, grouped by role.
+An autonomous agent fleet on a single server, in six role groups.
 A Postgres-backed dispatcher leases tasks from a queue and runs each agent as a headless Claude Code
 process with an explicit tool allowlist.
 
@@ -11,7 +11,7 @@ Runs (queue table, read on 18 Nov 2026): **6,598 runs (attempts) and 6,438 tasks
 Before the self-healer shipped on 2026-08-22, 43% of all runs (471 of 1,088) were failed or stale;
 that backlog drained to zero the same day ([snapshot](../evals/2026-08-25-fleet-stats.json)).
 
-Beside the fleet, I work with parallel Claude Code lanes, each with a fixed role, a security lane that
+Beside the fleet, I work with ten parallel Claude Code lanes, each with a fixed role, a security lane that
 reads every change, and my approval before anything is released.
 
 ## Flow
@@ -44,7 +44,7 @@ Agent output → Telegram digest, CRM, or a branch for the lander
 
 ## Roles
 
-The agents are grouped by role: infrastructure and security, code quality, product delivery, growth and
+The agents are in six role groups: infrastructure and security, code quality, product delivery, growth and
 sales, research and learning, content and brand.
 
 Each agent is one catalog entry: role, tool allowlist, trigger, model tier, turn limit and budget.

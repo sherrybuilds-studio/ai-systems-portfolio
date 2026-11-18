@@ -43,10 +43,7 @@ Each call's AI-disclosure check is logged in this SHA-256 hash-chained journal (
 
 - Each new version passes a call simulator, the test suite and a separate review before I switch it on.
 - A deterministic outcome rubric grades golden call transcripts, including ones with known defects, with no model and no network. It runs in CI.
-
-| Result | Evidence |
-|---|---|
-| **12 of 12 golden calls judged correctly** (gate at least 80%), offline and deterministic. This graded the **earlier version** of the assistant, on Vapi, before the move to ElevenLabs | [`evals/2026-09-02-voice-receptionist-eval.json`](../../evals/2026-09-02-voice-receptionist-eval.json), 2 Sep 2026 |
+- Earlier version, dated: on 2 Sep 2026 the rubric judged 12 of 12 golden calls correctly (gate at least 80%). That graded the earlier version of the assistant, on Vapi, before the move to ElevenLabs ([file](../../evals/2026-09-02-voice-receptionist-eval.json)).
 
 ## Stack
 

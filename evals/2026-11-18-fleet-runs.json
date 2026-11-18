@@ -4,5 +4,17 @@
   "runs": 6598,
   "tasks": 6438,
   "method": "a read-only count over the fleet's Postgres task queue on 2026-11-18: tasks = queued work items created since the first one on 2026-06-10; runs = attempts, a task retried counts once per attempt",
-  "note": "No failure rate is given: the queue stores no reason for a failure, so a hard-failure rate cannot be derived from it. No agent count is given on public text."
+  "note": "No failure rate is given: the queue stores no reason for a failure, so a hard-failure rate cannot be derived from it. No agent count is given on public text.",
+  "commits": {
+    "since": "2026-05-18",
+    "until": "2026-11-18",
+    "repositories": 16,
+    "total": 1402,
+    "best_seven_days": {
+      "from": "2026-09-25",
+      "to": "2026-10-01",
+      "commits": 298
+    },
+    "method": "GitHub's own history of each code repository's default branch, read-only on 2026-11-18; commits with a commit date from 2026-05-18; the best seven days as a rolling window over Berlin calendar days. The organisation's knowledge-base repository (notes and logs, written mostly by agents) is not counted, so these are commits to code repositories only."
+  }
 }

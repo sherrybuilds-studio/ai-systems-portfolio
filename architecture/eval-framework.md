@@ -21,7 +21,6 @@ regression, not model noise.
 
 | Product | What the gate checks | Result | Threshold | File |
 | --- | --- | --- | --- | --- |
-| Voice receptionist, earlier version (on Vapi, before the move to ElevenLabs) | 12 golden call transcripts scored by a deterministic rubric: booking outcome, number grounding, AI disclosure present, recording-notice handling | 12 of 12 | 80% | [2026-09-02](../evals/2026-09-02-voice-receptionist-eval.json) |
 | Restaurant assistant | 10 gold questions against a freshly rebuilt ChromaDB index with hybrid search | 10 of 10, average retrieval score 0.646 | 100% | [2026-09-02](../evals/2026-09-02-restaurant-bot-eval.json) |
 | Sales OS, exposure scorer | 10 fixture leads (5 high exposure, 5 low) plus a check that medical and dental businesses are excluded | 10 of 10 | 80% | [2026-09-02](../evals/2026-09-02-sales-os-eval.json) |
 | Sales OS, outreach | HMAC verification, inbound parsing, the 24-hour session window, template bodies, the stage machine and the UWG §7 consent gate, all mocked | 20 of 21 | 80% | [2026-09-04](../evals/2026-09-04-sales-os-phase-gates.json) |
