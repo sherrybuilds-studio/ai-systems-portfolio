@@ -1,7 +1,7 @@
 # Frontkept: AI Phone Assistant
 
 Frontkept is my AI phone assistant for Berlin estate agents and property managers. I founded it in October 2026, and it is new.
-It answers in German, with English in testing, says in its first sentence that it is an AI, takes down what the caller needs, and records no audio.
+It answers in German, with English in testing, says in its first sentence that it is an AI, notes each caller's request, and records no audio.
 Status: pilot. **Demo on request** via [sherrybuilds.com](https://sherrybuilds.com).
 
 > The source code is private. This page describes the design and links the dated evidence. It contains no prompts, configuration or code.
