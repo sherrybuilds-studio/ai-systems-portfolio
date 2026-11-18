@@ -23,8 +23,6 @@ This repository holds the architecture notes and the dated evaluation files behi
 | **[Strategy validation pipeline](./projects/trading-pipeline/)** | Crypto strategy research on Freqtrade. A candidate earns paper-trading time only by passing a nine-stage, fail-closed statistical gate: static lookahead scan, data contract, signal sanity, recursion and lookahead analysis, four-fold walk-forward, fee stress at Kraken's published maker rate, Monte Carlo drawdown and deflated Sharpe. Spot trading in euros, dry run only | Research, dry-run only | [12 trials gated, 0 passed, true out-of-sample 729 days](./evals/2026-10-03-trading-gate.json), 3 Oct 2026 |
 | **[sherrybuilds.com](https://sherrybuilds.com)** | Next.js portfolio. Its evidence section is generated from dated eval files like the ones here; the code is private | Online | Released through CI behind a manual approval |
 
-Activity: 1,402 commits across 16 code repositories in six months (18 May to 18 Nov 2026); 298 in the strongest seven days (25 Sep to 1 Oct 2026) ([method](./evals/2026-11-18-fleet-runs.json)).
-
 Every linked number comes from a file in [`evals/`](./evals), and each file records its date and how it was produced. The 38% is recorded in the WhatsApp assistant's changelog, which is private.
 
 ## Architecture
