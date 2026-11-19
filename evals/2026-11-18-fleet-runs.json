@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-18",
+  "since": "2026-06-10",
+  "runs": 6598,
+  "tasks": 6438,
+  "method": "a read-only count over the fleet's Postgres task queue on 2026-11-18: tasks = queued work items created since the first one on 2026-06-10; runs = attempts, a task retried counts once per attempt",
+  "note": "No failure rate is given: the queue stores no reason for a failure, so a hard-failure rate cannot be derived from it. No agent count is given on public text.",
+  "commits": {
+    "page_sentence": "about 2,400 commits in my code since May 2026, built with AI agents under my review",
+    "since": "2026-05-18",
+    "until": "2026-11-18",
+    "code_repositories": 16,
+    "commits_without_merges": 2382,
+    "commits_with_merges": 2653,
+    "method": "a fresh bare copy of each code repository of the organisation from GitHub, every branch, each commit hash counted once, commits dated from 18 May 2026 00:00 Berlin; read-only on 2026-11-18. The knowledge-base repository is not counted. Most commits carry an AI co-author line: the code was written with AI coding agents and reviewed by me."
+  }
+}

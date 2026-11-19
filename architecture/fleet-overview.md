@@ -2,14 +2,17 @@
 
 ## Overview
 
-An autonomous agent fleet on a single server, organised in six teams.
+An autonomous agent fleet on a single server, in six role groups.
 A Postgres-backed dispatcher leases tasks from a queue and runs each agent as a headless Claude Code
 process with an explicit tool allowlist.
 
-Verified numbers (database snapshot, 2026-09-24): **2.4% hard failures in 1,000 fleet runs, July to
-September 2026** (9 July to 24 September; 803 done, 173 skipped, 24 failed; [snapshot](../evals/2026-09-24-fleet-stats.json)).
+Runs (queue table, read on 18 Nov 2026): **6,598 runs (attempts) and 6,438 tasks since 10 Jun 2026**
+([count](../evals/2026-11-18-fleet-runs.json)).
 Before the self-healer shipped on 2026-08-22, 43% of all runs (471 of 1,088) were failed or stale;
-that backlog drained to zero the same day.
+that backlog drained to zero the same day ([snapshot](../evals/2026-08-25-fleet-stats.json)).
+
+Beside the fleet, I work with ten parallel Claude Code lanes, each with a fixed role, a security lane that
+reads every change, and my approval before anything is released.
 
 ## Flow
 
@@ -21,7 +24,7 @@ sherry-enqueue <agent> -m "task" --priority 2 --dedup-key <key>
     │
     ▼
 ┌──────────────────────────────────┐
-│  PostgreSQL: agent_tasks         │
+│  PostgreSQL task queue           │
 │  queue with dedup keys + leases  │
 └─────────┬────────────────────────┘
           │ FOR UPDATE SKIP LOCKED
@@ -39,16 +42,10 @@ sherry-enqueue <agent> -m "task" --priority 2 --dedup-key <key>
 Agent output → Telegram digest, CRM, or a branch for the lander
 ```
 
-## The six teams
+## Roles
 
-| Team | Agents |
-| --- | --- |
-| Infrastructure and security | sentinel-prime · security-auditor · incident-responder · backup-verifier · disk-ram-warden · cert-dns-checker · dependency-bumper · log-summarizer · secret-scanner · secret-guard · fleet-janitor · deploy-monitor · stripe-billing-guard · cost-warden |
-| Code quality | code-reviewer · test-engineer · eval-runner · refactor-surgeon · bug-triager · perf-profiler · docs-keeper · merge-captain · migration-foreman |
-| Product delivery | commerce-keeper · restaurant-keeper · jobhunt-keeper · rag-curator · prompt-tuner · conversation-qa · whatsapp-launcher · interior-bot-builder · demo-builder |
-| Growth and sales | lead-qualifier · outreach-drafter · proposal-writer · pipeline-analyst · competitor-watcher · market-scanner · testimonial-collector · pricing-strategist |
-| Research and learning | morning-researcher · claude-tracker · fact-checker · paper-digester · tool-scout · uni-assistant · idea-curator |
-| Content and brand | content-strategist · linkedin-ghostwriter · case-study-writer · portfolio-keeper · video-script-writer · brand-voice-guard · weekly-narrator |
+The agents are in six role groups: infrastructure and security, code quality, product delivery, growth and
+sales, research and learning, content and brand.
 
 Each agent is one catalog entry: role, tool allowlist, trigger, model tier, turn limit and budget.
 An agent runs only when a trigger gives it real work.
@@ -56,9 +53,9 @@ An agent runs only when a trigger gives it real work.
 ## Models and cost
 
 - Fleet agents run on Claude: Haiku for most jobs, Opus for the few that need deeper reasoning.
-- Product LLM calls (retrieval assistants, Sales OS drafts and scoring) run on GLM-5.2 through OpenRouter.
+- Product LLM calls (retrieval assistants, Sales OS drafts and scoring) run through OpenRouter.
 - A cost ledger prices every fleet run from its token usage at list price. A daily cap stops new work when
-  it is reached, with a soft warning at 80%.
+  it is reached; past 80% of it, only priority-1 work is leased.
 - Dedup keys stop the same work from being queued twice; per-task budgets flag runs that overspend.
 
 ## Self-healing loop (since 2026-08-22)

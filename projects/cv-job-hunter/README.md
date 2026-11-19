@@ -1,17 +1,17 @@
 # Job Pipeline
 
 A job-search pipeline that finds roles fitting a candidate profile and prepares everything needed to
-apply: a one-page CV tailored to the posting and a cover letter that an independent reviewer has checked.
+apply: a one-page CV tailored to the posting and a cover letter that an independent AI reviewer has checked.
 Nothing is sent automatically; a person sends every application.
 
-> **Status (2026-10-15):** runs daily via the fleet. 308 to 383 postings per run over 23 to 26 September,
-> plus an on-demand sourcing pass over **83 company career boards** (2,981 postings on 26 September).
+> **Status (2026-11-18):** built, run on demand; the daily schedule stopped on 13 Nov 2026. When it ran daily it
+> scraped 308 to 383 postings per run over 23 to 26 September, plus an on-demand sourcing pass over **83 company career boards** (2,981 postings on 26 September).
 > [Evidence](../../evals/2026-09-26-job-pipeline.json). Public code:
 > [job-pipeline](https://github.com/sherrybuilds-studio/job-pipeline), with a fictional example profile.
 
 ## Two passes and a kit builder
 
-**Daily run.** Scrapes job boards, drops roles that fail a hard requirement, scores the rest with rules
+**Scoring run, on demand (daily until 13 Nov 2026).** Scrapes job boards, drops roles that fail a hard requirement, scores the rest with rules
 (no model call), prepares a tailored CV for each strong match and sends a Telegram digest. A small graph decides between
 researching, widening the search and reporting "no jobs today".
 
@@ -26,7 +26,7 @@ review, at most one revision, and a final honesty gate. A kit is cleared only at
 ## Architecture
 
 ```text
-DAILY RUN (via the fleet)
+SCORING RUN (on demand; daily until 13 Nov 2026)
   job boards ──▶ hard requirements ──▶ rule-based score (no LLM)
                                            │
                ┌───────────────────────────┼──────────────────────────┐
@@ -41,7 +41,7 @@ SOURCING PASS (on demand)
     ──▶ already applied? ──▶ employer page still open? ──▶ READY or WEAK report
 
 KIT (per READY role, never sends)
-  tailored CV ──▶ letter draft ──▶ independent reviewer ──▶ ≤ 1 revision ──▶ honesty gate
+  tailored CV ──▶ letter draft ──▶ independent AI reviewer ──▶ ≤ 1 revision ──▶ honesty gate
     ──▶ lint on the rendered PDFs ──▶ cleared kit ──▶ a person sends it
     ──▶ send gate: posting live in the last 24 h, lint clean ──▶ follow-up draft on day 4
 ```
@@ -66,7 +66,7 @@ Aggregator listings go stale. Before anything is written, the pipeline resolves 
 employer's own posting page and checks that it is still open. The send gate checks again: a send is
 stamped only if the page was live within the last 24 hours.
 
-### An independent reviewer at zero unsupported claims
+### An independent AI reviewer at zero unsupported claims
 
 The reviewer reads the letter in a fresh context with the posting fenced off as untrusted data, so
 instructions hidden in a job ad cannot steer it. Any claim the profile does not back is an unsupported
