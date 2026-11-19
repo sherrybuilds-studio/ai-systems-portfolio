@@ -1,5 +1,6 @@
 # Example docker-compose for SherryOS stack
-# This is a TEMPLATE — no real ports, credentials, or hostnames.
+# This is a TEMPLATE: no ports, credentials or hostnames. The services reach
+# each other on the compose network; publish a port only where you need one.
 # Copy and fill in your own values.
 
 version: "3.9"
@@ -14,22 +15,16 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
-    ports:
-      - "127.0.0.1:5432:5432"
 
   # Embeddings service — shared MiniLM model
   embeddings:
     build: ./services/embeddings
-    ports:
-      - "127.0.0.1:7010:7010"
     environment:
-      MODEL_NAME: all-MiniLM-L6-v2
+      MODEL_NAME: ${EMBEDDING_MODEL}
 
   # API gateway
   gateway:
     build: ./services/gateway
-    ports:
-      - "127.0.0.1:8000:8000"
     depends_on:
       - postgres
     env_file:
