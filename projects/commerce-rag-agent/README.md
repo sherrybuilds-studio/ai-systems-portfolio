@@ -23,7 +23,7 @@ comes from retrieval, not from the cache, and it measures prompt size, not a bil
 | Messaging | Meta WhatsApp Cloud API (Graph API webhooks) |
 | Webhook server | FastAPI |
 | Vector store | ChromaDB (persistent) |
-| Embeddings | `all-MiniLM-L6-v2` (sentence-transformers) |
+| Embeddings | a MiniLM model (sentence-transformers) |
 | LLM | Claude 3.5 Haiku through OpenRouter |
 | Chunking | LangChain `RecursiveCharacterTextSplitter` (512 characters, 100 overlap) |
 | Leads | Supabase, plus a shared sheet for outreach |

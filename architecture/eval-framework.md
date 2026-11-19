@@ -23,7 +23,7 @@ regression, not model noise.
 | --- | --- | --- | --- | --- |
 | Restaurant assistant | 10 gold questions against a freshly rebuilt ChromaDB index with hybrid search | 10 of 10, average retrieval score 0.646 | 100% | [2026-09-02](../evals/2026-09-02-restaurant-bot-eval.json) |
 | Sales OS, exposure scorer | 10 fixture leads (5 high exposure, 5 low) plus a check that medical and dental businesses are excluded | 10 of 10 | 80% | [2026-09-02](../evals/2026-09-02-sales-os-eval.json) |
-| Sales OS, outreach | HMAC verification, inbound parsing, the 24-hour session window, template bodies, the stage machine and the UWG §7 consent gate, all mocked | 20 of 21 | 80% | [2026-09-04](../evals/2026-09-04-sales-os-phase-gates.json) |
+| Sales OS, outreach | HMAC verification, inbound parsing, the 24-hour session window, template bodies, the stage machine and the consent gate, all mocked | 20 of 21 | 80% | [2026-09-04](../evals/2026-09-04-sales-os-phase-gates.json) |
 | Sales OS, call copilot | ASR parsing, playbook retrieval with fake embeddings, suggestion caps, session recovery | 14 of 14 | 80% | [2026-09-04](../evals/2026-09-04-sales-os-phase-gates.json) |
 
 The voice and restaurant gates run in the monorepo's CI, together with the portfolio-chat
@@ -32,12 +32,12 @@ blocking, plus a grep that fails on any retracted number.
 
 ## Beyond the product gates
 
-- **Job pipeline:** every CV and cover letter passes an independent reviewer that must find zero
+- **Job pipeline:** every CV and cover letter passes an independent AI reviewer that must find zero
   unsupported claims before anything is sent, and an output lint.
 - **Agent fleet:** agent work reaches main only through the lander, which requires every CI check to
   be green on the exact commit it merges.
 
 ## Why it matters
 
-When the product model changes (for example Claude to GLM-5.2), the gates catch regressions before
+When the product model changes (for example from one model provider to another), the gates catch regressions before
 they reach a customer. A model that scores below the threshold does not ship.

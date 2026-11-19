@@ -1,6 +1,6 @@
 # Sales OS
 
-**A compliance-first lead pipeline for the AI phone receptionist.**
+**A consent-first lead pipeline for the AI phone assistant.**
 
 Sales OS finds owner-run local businesses on Google Places and ranks them by **missed-call exposure**: no
 online booking, no listed opening hours, reviews saying nobody picks up, one owner running one location.
@@ -16,7 +16,7 @@ automated eval before any change merges.
 
 Sales OS findet inhabergeführte Betriebe auf Google Places und bewertet, wie viele Anrufe dort
 voraussichtlich unbeantwortet bleiben. Nachrichten werden nur für Betriebe mit Einwilligung vorbereitet
-(UWG §7), und keine Nachricht wird ohne Freigabe durch einen Menschen verschickt.
+und keine Nachricht wird ohne Freigabe durch einen Menschen verschickt.
 
 ## What it does
 
@@ -25,7 +25,7 @@ voraussichtlich unbeantwortet bleiben. Nachrichten werden nur für Betriebe mit 
 2. **Exposure scoring**: a pure function scores each business on the signals above and keeps the ones
    above a threshold as prospects.
 3. **Consent-first outreach**: bilingual drafts (German and English) only for leads with recorded
-   consent (UWG §7). Each draft goes to Telegram, where the operator sends it with `/send` or drops it
+   consent. Each draft goes to Telegram, where the operator sends it with `/send` or drops it
    with `/skip`.
 4. **Follow-ups and re-engagement**: a CRM stage machine computes which follow-ups are due and drafts them
    the same way.
@@ -37,11 +37,11 @@ voraussichtlich unbeantwortet bleiben. Nachrichten werden nur für Betriebe mit 
 
 - **Python**: small single-purpose modules, wired by orchestrators
 - **Google Places API (New)**: Text Search and Place Details for discovery (httpx with retry)
-- **GLM-5.2 through OpenRouter**: drafts, call suggestions, summaries
+- **An LLM through OpenRouter**: drafts, call suggestions, summaries
 - **Supabase (Postgres)**: CRM tables for leads, conversations and calls
 - **Telegram Bot API**: pipeline digests and the human approval loop
 - **Meta WhatsApp Cloud API**: templates, session messages, HMAC-verified webhooks, built from scratch
-- **Deepgram Nova-3**: streaming speech-to-text over WebSocket, German and English in the same call
+- **Streaming speech-to-text** over WebSocket, German and English in the same call
 - **ChromaDB**: playbook index (sales playbook, objection handling, pricing FAQ)
 - **FastAPI with server-sent events**: the live browser overlay for the copilot
 - **Playwright**: the earlier website-quality scorer, still available behind a flag
@@ -62,12 +62,12 @@ Phase 1 — Lead discovery
   Orchestrator ─── discover → score → CRM upsert → Telegram digest   (--dry-run skips all writes)
 
 Phase 2 — WhatsApp outreach (human in the loop)
-  Consented leads → GLM-5.2 bilingual drafts → Telegram approval (/send or /skip)
+  Consented leads → LLM bilingual drafts → Telegram approval (/send or /skip)
   → Meta Cloud API → CRM stage advance + inbound inbox
 
 Phase 3 — Live call copilot
-  Call audio → Deepgram streaming ASR → crash-safe session journal
-  → playbook retrieval + GLM-5.2 → at most 2 suggestions above 0.6 confidence
+  Call audio → streaming ASR → crash-safe session journal
+  → playbook retrieval + LLM → at most 2 suggestions above 0.6 confidence
   → Telegram + browser overlay → bilingual summary after the call → CRM
 ```
 
@@ -75,7 +75,7 @@ See [architecture.md](architecture.md) for the stage-by-stage breakdown.
 
 ## Key engineering decisions
 
-- **Consent enforced in code.** German UWG §7 requires prior express consent for electronic advertising.
+- **Consent enforced in code.** Outreach goes only to people who agreed to be contacted.
   The drafter raises an exception for any lead without `consent=true` in the CRM. No cold-messaging tool
   exists in the codebase.
 - **Nothing sends by itself.** Every outbound message is a draft that a human approves in Telegram; no

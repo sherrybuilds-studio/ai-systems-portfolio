@@ -3,7 +3,7 @@
 ## Components
 
 - **ChromaDB** — persistent vector store (one collection per product)
-- **Embeddings service** — one shared MiniLM service (all-MiniLM-L6-v2) for every product
+- **Embeddings service** — one shared MiniLM service (sentence-transformers) for every product
 - **Semantic cache** — answers a repeated question without a model call when cosine similarity clears the threshold (0.92 to 0.95, per product)
 
 ## Hybrid Search (commerce agent pattern)
